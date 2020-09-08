@@ -1,0 +1,163 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 13px;
+    color: #222;
+}
+
+/* Header */
+header{
+    border-bottom: 1px solid #e6e6e6;
+    height: 40px;
+    background: #f7f7f7;
+    padding: 0 20px;
+}
+
+header > button{
+    margin: 10px 10px 0 5px;
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    outline: none;
+    transition: color 200ms ease;
+    cursor: pointer;
+}
+
+header > button[data-debug="true"]{
+    opacity: .4;
+}
+
+/* Tabbar */
+#tabbar{
+    border-bottom: 1px solid #e6e6e6;
+    height: 30px;
+    background: #f7f7f7;
+    padding: 0 20px;
+}
+
+#tabbar > .item{
+    float:left;
+    border-right: 1px solid #e6e6e6;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    padding: 0 15px;
+    vertical-align: center;
+    cursor:pointer;
+}
+
+#tabbar > .item[data-active=true]{
+    border-bottom: 1px solid #ff9900;
+}
+
+
+/* Page / Main */
+#page{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.mockobj-tile{
+    width: auto;
+    height: 200px;
+    min-width: 300px;
+    max-width: 700px;
+    border: 1px solid #e6e6e6;
+    margin: 5px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    position: relative;
+}
+
+.mockobj-tile > input{
+    border: none;
+    border-bottom: 1px solid #dadada;
+    width: calc(100% - 40px);
+    margin: 10px;
+    outline: none;
+    font-size: 13px;
+    padding: 9px 10px;
+    background: #dadada;
+    border-radius: 3px;
+}
+
+.mockobj-tile > input:focus{
+    background: #fff;
+}
+
+.mockobj-properties{
+    overflow-x: auto;
+    height: calc(100% - 60px);
+}
+
+.mockobj-properties >  .mockobj-property{
+    margin: 0px 5px;
+    overflow: hidden;
+}
+
+.mockobj-properties > .mockobj-property > p{
+    float: left;
+    margin: 2px 10px;
+    position: relative;
+    outline: none;
+    padding: 3px 5px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.mockobj-properties > .mockobj-property > p:focus{
+    background: #fff;
+    border-color: #dadada;
+}
+
+.mockobj-properties >  .mockobj-property > .mockobj-property-pred:before{
+    /* content: ':'; */
+}
+
+.mockobj-properties >  .mockobj-property > .mockobj-property-pred:after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: rgb(163, 163, 163);
+    top: 10px;
+    right: -15px;
+}
+
+.mockobj-properties >  .mockobj-property > .mockobj-property-obj:before{
+    content: '';
+    position: absolute;
+    height: 0;
+    width: 0;
+    border: 5px solid;
+    border-color: transparent transparent transparent rgb(163, 163, 163);
+    top: 6px;
+    left: -10px;
+}
+
+
+.mockobj-tile  > .mockobj-cmdRemove{
+    background: #404040;
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    border-radius: 10px;
+    color: #e2e2e2;
+    text-align: center;
+    line-height: 13px;
+    display: none;
+    cursor: pointer;
+}
+
+.mockobj-tile  > .mockobj-cmdRemove:hover{
+    background: rgb(221, 61, 61);
+}
+
+.mockobj-tile:hover > .mockobj-cmdRemove{
+    display: block;
+}

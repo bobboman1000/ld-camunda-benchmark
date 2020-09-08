@@ -1,0 +1,19 @@
+<property-Lighting_1F_M38> {
+<property-Lighting_1F_M38#it> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <property-Lighting_1F_M38>;
+    a <http://www.w3.org/ns/ssn/Property>, <http://www.w3.org/ns/sosa/ObservableProperty>, <http://www.w3.org/ns/sosa/ActuableProperty>;
+    <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> "off"
+}
+<Lighting_1F_M38> {
+<Lighting_1F_M38> a <http://buildsys.org/ontologies/Brick#Lighting>;
+    <http://www.w3.org/ns/ssn/hasProperty> <property-Lighting_1F_M38#it>;
+    <http://www.w3.org/2000/01/rdf-schema#label> "1F_M38"@en;
+    <http://buildsys.org/ontologies/BrickFrame#feeds> <Room_SOR42_F_20>;
+    <http://buildsys.org/ontologies/BrickFrame#hasPoint> <B3_42_1F_Z4_G8_LGHT_LOAD>, <B3_42_1F_Z4_G8_LGHT_FAULT>, <B3_42_1F_Z4_G8_M38_LUX_LEVEL>, <B3_42_GF_Z4_G8_LGHT_FAULT>, <B3_42_GF_Z4_G8_LGHT_LOAD>, <d02_Z4_G8_Workstation4_MM38_TRIGGER>.
+<B3_42_1F_Z4_G8_LGHT_LOAD> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38>.
+<B3_42_1F_Z4_G8_LGHT_FAULT> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38>.
+<B3_42_1F_Z4_G8_M38_LUX_LEVEL> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38>.
+<B3_42_GF_Z4_G8_LGHT_FAULT> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38>.
+<B3_42_GF_Z4_G8_LGHT_LOAD> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38>.
+<d02_Z4_G8_Workstation4_MM38_TRIGGER> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38>.
+<Room_SOR42_F_20> <http://buildsys.org/ontologies/BrickFrame#isFedBy> <Lighting_1F_M38>
+}

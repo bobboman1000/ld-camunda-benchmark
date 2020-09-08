@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+    <head>
+        <title>MOCK UI</title>
+
+        <!-- styles -->
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+
+        <!-- scripts -->
+        <script src="res/jquery-3.4.1.min.js"></script>       
+        <script src="classes/mockobj.class.js"></script>       
+        <script src="classes/graph.class.js"></script>       
+    
+        <script>
+            var activeGraph = null;
+            var graphs = {};
+
+            // register save key command
+            $(document).keydown((e) => {
+                if((e.ctrlKey || e.metaKey) && e.which == 83) {
+                    save();
+                    e.preventDefault();
+                    return false;
+                };
+            });
+
+            // load data when ready
+            $(document).ready(() => {
+                var $page = $('#page');
+                $page.html('');
+                
+           
+                $('#tabbar').html('');
+                load((json_graphs) => {
+                    for(var i in json_graphs){
+                        var graph = new MockGraph(json_graphs[i].name);
+                        graphs[graph.name] = graph;
+
+                        addGraph(json_graphs[i].name);
+
+                        // test
+                        for(var j in json_graphs[i].subjects){
+                            
+                            var mockobj = new Mockobj();
+                            mockobj.onChange(onMockObjectChange);
+                            mockobj.onRemove(onMockObjectRemove);
+                            mockobj.name = json_graphs[i].subjects[j].name;
+
+                            for(var k in json_graphs[i].subjects[j].properties){
+                                mockobj.addProperty(
+                                    json_graphs[i].subjects[j].properties[k].predicate, 
+                                    json_graphs[i].subjects[j].properties[k].object
+                                );
+                            }
+
+                            graph.addMockObject(mockobj);
+                            
+                        }
+                    }
+
+                    selectGraph(json_graphs[0].name);
+                });
+
+            });
+
+            function onMockObjectChange(o, d){
+                console.log('Change', o, d);
+                document.title = "MOCK UI*";
+            }
+
+            function onMockObjectRemove(o, d){
+                console.log('Remove object:', o);
+                activeGraph.removeMockObject(o);
+            }
+
+            function graphsToJson(){
+                var json = [];
+                for(var i in graphs){
+                    json.push(graphs[i].toJSON());
+                }
+                return json;
+            }
+
+            function save(){
+                $.ajax({
+                    type: "POST",
+                    url: "/mock/json",
+                    data: JSON.stringify(graphsToJson()),
+                    contentType: "application/json; charset=utf-8"
+                }).done(() => {
+                    console.log('POST /moch/json <done>');
+                    document.title = "MOCK UI";
+                }).fail((x, e) => {
+                    console.log('POST /moch/json <fail:', e, '>');
+                });
+            }
+
+         
+            function load(callback){
+                $.ajax({
+                    type: "GET",
+                    url: "/mock/json",
+                    dataType: 'json'
+                }).done((data) => {
+                    console.log('GET /moch/json <done:', data, '>');
+                    callback(data);
+                }).fail((x, e) => {
+                    console.log('GET /moch/json <fail:', e, '>');
+                });
+            }
+
+            function addGraph(name){
+                $('<div class="item"></div>')
+                    .on('click', function(){
+                        selectGraph(this.dataset.name);
+                    })
+                    .attr('data-name', name)
+                    .text(name)
+                    .appendTo($('#tabbar'));
+            }
+
+            function addNewGraph(){
+                var name = prompt('Enter name (not validated!)');
+                if(!name) return;
+                var graph = new MockGraph(name);
+                graphs[graph.name] = graph;
+                addGraph(graph.name);
+                selectGraph(graph.name);
+            }
+
+            function addNewMockObject(){
+                if(!activeGraph) return;
+
+                var mockobj = new Mockobj();
+                mockobj.onChange(onMockObjectChange);
+                mockobj.onRemove(onMockObjectRemove);
+                activeGraph.addMockObject(mockobj);
+
+                // refresh
+                buildActiveGraph();
+            }
+
+            function selectGraph(name){
+                if(activeGraph == name) return;
+                $('#tabbar > .item').attr('data-active', false);
+                $('#tabbar > .item[data-name="'+name+'"').attr('data-active', true);
+                activeGraph = graphs[name];
+
+                // 
+                buildActiveGraph();
+            }
+
+            function buildActiveGraph(){
+                $('#page').html('');
+                mockobjs = activeGraph.getMockObjects();
+                for(var i in mockobjs){
+                    var mockobj = mockobjs[i];
+                    mockobj._build();
+                    $('#page').append(mockobj.dom);
+                }
+            }
+
+            function removeActiveGraph(){
+                if(!confirm('Delete the current graph permanently?')) return;
+                delete graphs[activeGraph.name];
+
+                $('#tabbar > .item[data-name="'+activeGraph.name+'"').remove();
+
+                var k = Object.keys(graphs);
+                if(k.length > 0){
+                    selectGraph(k[0]);
+                }else{
+                    $('#page').html('');
+                }
+            }
+            
+        </script>
+
+    </head>
+    <body>
+
+        <header>
+            <button onclick="addNewGraph();">+ Graph</button>
+            <button onclick="addNewMockObject();">+ Object</button>
+            <button onclick="removeActiveGraph();">- Graph</button>
+            <button onclick="save()">Save</button>
+            <button onclick="load(console.log)" data-debug="true">Load</button>
+            <button onclick="console.log(JSON.stringify(graphsToJson()))" data-debug="true">JSON</button>
+
+            <!-- <select id="selectSourceFile"></select> -->
+        </header>
+
+        <div id="tabbar">
+            <div class="item">Graph1</div>
+            <div class="item">Graph2</div>
+            <div class="item">Graph3</div>
+            <div class="item">Graph4</div>
+            <div class="item">Graph5</div>
+        </div>
+
+
+        <div id="page">
+            <div class="mockobj-tile"></div>
+            <div class="mockobj-tile"></div>
+            <div class="mockobj-tile"></div>
+            <div class="mockobj-tile"></div>
+            <div class="mockobj-tile"></div>
+        </div>
+
+    </body>
+</html>

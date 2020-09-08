@@ -1,0 +1,27 @@
+<property-Lighting_1F_M38> {
+<property-Lighting_1F_M38#it> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <property-Lighting_1F_M38> .
+<property-Lighting_1F_M38#it> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ssn/Property> .
+<property-Lighting_1F_M38#it> <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> "off" .
+<property-Lighting_1F_M38#it> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sosa/ObservableProperty> .
+<property-Lighting_1F_M38#it> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/sosa/ActuableProperty> .
+}
+<Lighting_1F_M38> {
+<Lighting_1F_M38> <http://www.w3.org/ns/ssn/hasProperty> <property-Lighting_1F_M38#it> .
+<Lighting_1F_M38> <http://www.w3.org/ns/ssn/hasProperty> <property-Lighting_1F_M38#it> .
+<B3_42_1F_Z4_G8_LGHT_LOAD> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38> .
+<B3_42_1F_Z4_G8_LGHT_FAULT> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38> .
+<B3_42_1F_Z4_G8_M38_LUX_LEVEL> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38> .
+<B3_42_GF_Z4_G8_LGHT_FAULT> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38> .
+<B3_42_GF_Z4_G8_LGHT_LOAD> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38> .
+<d02_Z4_G8_Workstation4_MM38_TRIGGER> <http://buildsys.org/ontologies/BrickFrame#isPointOf> <Lighting_1F_M38> .
+<Lighting_1F_M38> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://buildsys.org/ontologies/Brick#Lighting> .
+<Lighting_1F_M38> <http://www.w3.org/2000/01/rdf-schema#label> "1F_M38"@en .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#feeds> <Room_SOR42_F_20> .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#hasPoint> <B3_42_1F_Z4_G8_LGHT_FAULT> .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#hasPoint> <B3_42_1F_Z4_G8_LGHT_LOAD> .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#hasPoint> <B3_42_1F_Z4_G8_M38_LUX_LEVEL> .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#hasPoint> <B3_42_GF_Z4_G8_LGHT_FAULT> .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#hasPoint> <B3_42_GF_Z4_G8_LGHT_LOAD> .
+<Lighting_1F_M38> <http://buildsys.org/ontologies/BrickFrame#hasPoint> <d02_Z4_G8_Workstation4_MM38_TRIGGER> .
+<Room_SOR42_F_20> <http://buildsys.org/ontologies/BrickFrame#isFedBy> <Lighting_1F_M38> .
+}

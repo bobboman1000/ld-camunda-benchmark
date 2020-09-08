@@ -1,0 +1,406 @@
+@prefix mock: <http://localhost:8080/mock/rdf/test> .
+
+mock:subject0
+mock:predicate0
+mock:object0 .
+
+mock:subject1
+mock:predicate1
+mock:object1 .
+
+mock:subject2
+mock:predicate2
+mock:object2 .
+
+mock:subject3
+mock:predicate3
+mock:object3 .
+
+mock:subject4
+mock:predicate4
+mock:object4 .
+
+mock:subject5
+mock:predicate5
+mock:object5 .
+
+mock:subject6
+mock:predicate6
+mock:object6 .
+
+mock:subject7
+mock:predicate7
+mock:object7 .
+
+mock:subject8
+mock:predicate8
+mock:object8 .
+
+mock:subject9
+mock:predicate9
+mock:object9 .
+
+mock:subject10
+mock:predicate10
+mock:object10 .
+
+mock:subject11
+mock:predicate11
+mock:object11 .
+
+mock:subject12
+mock:predicate12
+mock:object12 .
+
+mock:subject13
+mock:predicate13
+mock:object13 .
+
+mock:subject14
+mock:predicate14
+mock:object14 .
+
+mock:subject15
+mock:predicate15
+mock:object15 .
+
+mock:subject16
+mock:predicate16
+mock:object16 .
+
+mock:subject17
+mock:predicate17
+mock:object17 .
+
+mock:subject18
+mock:predicate18
+mock:object18 .
+
+mock:subject19
+mock:predicate19
+mock:object19 .
+
+mock:subject20
+mock:predicate20
+mock:object20 .
+
+mock:subject21
+mock:predicate21
+mock:object21 .
+
+mock:subject22
+mock:predicate22
+mock:object22 .
+
+mock:subject23
+mock:predicate23
+mock:object23 .
+
+mock:subject24
+mock:predicate24
+mock:object24 .
+
+mock:subject25
+mock:predicate25
+mock:object25 .
+
+mock:subject26
+mock:predicate26
+mock:object26 .
+
+mock:subject27
+mock:predicate27
+mock:object27 .
+
+mock:subject28
+mock:predicate28
+mock:object28 .
+
+mock:subject29
+mock:predicate29
+mock:object29 .
+
+mock:subject30
+mock:predicate30
+mock:object30 .
+
+mock:subject31
+mock:predicate31
+mock:object31 .
+
+mock:subject32
+mock:predicate32
+mock:object32 .
+
+mock:subject33
+mock:predicate33
+mock:object33 .
+
+mock:subject34
+mock:predicate34
+mock:object34 .
+
+mock:subject35
+mock:predicate35
+mock:object35 .
+
+mock:subject36
+mock:predicate36
+mock:object36 .
+
+mock:subject37
+mock:predicate37
+mock:object37 .
+
+mock:subject38
+mock:predicate38
+mock:object38 .
+
+mock:subject39
+mock:predicate39
+mock:object39 .
+
+mock:subject40
+mock:predicate40
+mock:object40 .
+
+mock:subject41
+mock:predicate41
+mock:object41 .
+
+mock:subject42
+mock:predicate42
+mock:object42 .
+
+mock:subject43
+mock:predicate43
+mock:object43 .
+
+mock:subject44
+mock:predicate44
+mock:object44 .
+
+mock:subject45
+mock:predicate45
+mock:object45 .
+
+mock:subject46
+mock:predicate46
+mock:object46 .
+
+mock:subject47
+mock:predicate47
+mock:object47 .
+
+mock:subject48
+mock:predicate48
+mock:object48 .
+
+mock:subject49
+mock:predicate49
+mock:object49 .
+
+mock:subject50
+mock:predicate50
+mock:object50 .
+
+mock:subject51
+mock:predicate51
+mock:object51 .
+
+mock:subject52
+mock:predicate52
+mock:object52 .
+
+mock:subject53
+mock:predicate53
+mock:object53 .
+
+mock:subject54
+mock:predicate54
+mock:object54 .
+
+mock:subject55
+mock:predicate55
+mock:object55 .
+
+mock:subject56
+mock:predicate56
+mock:object56 .
+
+mock:subject57
+mock:predicate57
+mock:object57 .
+
+mock:subject58
+mock:predicate58
+mock:object58 .
+
+mock:subject59
+mock:predicate59
+mock:object59 .
+
+mock:subject60
+mock:predicate60
+mock:object60 .
+
+mock:subject61
+mock:predicate61
+mock:object61 .
+
+mock:subject62
+mock:predicate62
+mock:object62 .
+
+mock:subject63
+mock:predicate63
+mock:object63 .
+
+mock:subject64
+mock:predicate64
+mock:object64 .
+
+mock:subject65
+mock:predicate65
+mock:object65 .
+
+mock:subject66
+mock:predicate66
+mock:object66 .
+
+mock:subject67
+mock:predicate67
+mock:object67 .
+
+mock:subject68
+mock:predicate68
+mock:object68 .
+
+mock:subject69
+mock:predicate69
+mock:object69 .
+
+mock:subject70
+mock:predicate70
+mock:object70 .
+
+mock:subject71
+mock:predicate71
+mock:object71 .
+
+mock:subject72
+mock:predicate72
+mock:object72 .
+
+mock:subject73
+mock:predicate73
+mock:object73 .
+
+mock:subject74
+mock:predicate74
+mock:object74 .
+
+mock:subject75
+mock:predicate75
+mock:object75 .
+
+mock:subject76
+mock:predicate76
+mock:object76 .
+
+mock:subject77
+mock:predicate77
+mock:object77 .
+
+mock:subject78
+mock:predicate78
+mock:object78 .
+
+mock:subject79
+mock:predicate79
+mock:object79 .
+
+mock:subject80
+mock:predicate80
+mock:object80 .
+
+mock:subject81
+mock:predicate81
+mock:object81 .
+
+mock:subject82
+mock:predicate82
+mock:object82 .
+
+mock:subject83
+mock:predicate83
+mock:object83 .
+
+mock:subject84
+mock:predicate84
+mock:object84 .
+
+mock:subject85
+mock:predicate85
+mock:object85 .
+
+mock:subject86
+mock:predicate86
+mock:object86 .
+
+mock:subject87
+mock:predicate87
+mock:object87 .
+
+mock:subject88
+mock:predicate88
+mock:object88 .
+
+mock:subject89
+mock:predicate89
+mock:object89 .
+
+mock:subject90
+mock:predicate90
+mock:object90 .
+
+mock:subject91
+mock:predicate91
+mock:object91 .
+
+mock:subject92
+mock:predicate92
+mock:object92 .
+
+mock:subject93
+mock:predicate93
+mock:object93 .
+
+mock:subject94
+mock:predicate94
+mock:object94 .
+
+mock:subject95
+mock:predicate95
+mock:object95 .
+
+mock:subject96
+mock:predicate96
+mock:object96 .
+
+mock:subject97
+mock:predicate97
+mock:object97 .
+
+mock:subject98
+mock:predicate98
+mock:object98 .
+
+mock:subject99
+mock:predicate99
+mock:object99 .
+
+mock:subject100
+mock:predicate100
+mock:object100 .
+

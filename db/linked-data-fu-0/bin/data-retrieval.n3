@@ -1,0 +1,28 @@
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix mock: <http://tok450s.lan:8080/ldbbc/mock.ttl#> .
+
+        mock:AlarmButton 
+         <http://example.org/isPressed> 
+         "true"^^xsd:boolean .
+
+         mock:Emergency 
+         <http://example.org/isArrived> 
+         "true"^^xsd:boolean .
+
+         mock:People 
+         <http://example.org/evacuated> 
+         "true"^^xsd:boolean . 
+
+         mock:People 
+         <http://example.org/counted> 
+         "true"^^xsd:boolean .
+
+         mock:Fire 
+         <http://example.org/extinguished> 
+         "true"^^xsd:boolean .
+
+#         mock:AlarmButton 
+#         <http://example.org/isPressed> 
+#         "false"^^xsd:boolean .
+
+

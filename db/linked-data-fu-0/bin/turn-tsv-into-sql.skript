@@ -1,0 +1,27 @@
+#!/usr/bin/awk
+BEGIN {
+ FS="\t"
+ print "DELETE FROM device ;" ;
+ print "INSERT INTO device (subject,predicate,object)"
+ print "VALUES"
+}
+{
+# Fixing ldfu's tsv output:
+
+if ($3 ~ " .$") {
+    $3 = substr($3,0,length($3)-2)
+}
+
+if (NR != 1) {
+    print ","
+}
+
+if ($3 == "true") {
+    print "('<" $1 ">','<" $2 ">','true^^<http://www.w3.org/2001/XMLSchema#boolean>')"
+} else {
+    print "('<" $1 ">','<" $2 ">','<" $3 ">')" }
+}
+
+END {
+ print ";"
+}

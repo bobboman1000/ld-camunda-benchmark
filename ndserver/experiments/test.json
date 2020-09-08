@@ -1,0 +1,145 @@
+[
+    {
+        "name": "property-Lighting_1F_M38",
+        "subjects": [
+            {
+                "name": "property-Lighting_1F_M38#it",
+                "properties": [
+                    {
+                        "predicate": "http://xmlns.com/foaf/0.1/isPrimaryTopicOf",
+                        "object": "property-Lighting_1F_M38"
+                    },
+                    {
+                        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                        "object": "http://www.w3.org/ns/ssn/Property"
+                    },
+                    {
+                        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                        "object": "http://www.w3.org/ns/sosa/ObservableProperty"
+                    },
+                    {
+                        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                        "object": "http://www.w3.org/ns/sosa/ActuableProperty"
+                    },
+                    {
+                        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value",
+                        "object": "\"off\""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Lighting_1F_M38",
+        "subjects": [
+            {
+                "name": "Lighting_1F_M38",
+                "properties": [
+                    {
+                        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                        "object": "http://buildsys.org/ontologies/Brick#Lighting"
+                    },
+                    {
+                        "predicate": "http://www.w3.org/ns/ssn/hasProperty",
+                        "object": "property-Lighting_1F_M38#it"
+                    },
+                    {
+                        "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+                        "object": "\"1F_M38\"@en"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#feeds",
+                        "object": "Room_SOR42_F_20"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#hasPoint",
+                        "object": "B3_42_1F_Z4_G8_LGHT_LOAD"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#hasPoint",
+                        "object": "B3_42_1F_Z4_G8_LGHT_FAULT"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#hasPoint",
+                        "object": "B3_42_1F_Z4_G8_M38_LUX_LEVEL"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#hasPoint",
+                        "object": "B3_42_GF_Z4_G8_LGHT_FAULT"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#hasPoint",
+                        "object": "B3_42_GF_Z4_G8_LGHT_LOAD"
+                    },
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#hasPoint",
+                        "object": "d02_Z4_G8_Workstation4_MM38_TRIGGER"
+                    }
+                ]
+            },
+            {
+                "name": "B3_42_1F_Z4_G8_LGHT_LOAD",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isPointOf",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            },
+            {
+                "name": "B3_42_1F_Z4_G8_LGHT_FAULT",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isPointOf",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            },
+            {
+                "name": "B3_42_1F_Z4_G8_M38_LUX_LEVEL",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isPointOf",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            },
+            {
+                "name": "B3_42_GF_Z4_G8_LGHT_FAULT",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isPointOf",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            },
+            {
+                "name": "B3_42_GF_Z4_G8_LGHT_LOAD",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isPointOf",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            },
+            {
+                "name": "d02_Z4_G8_Workstation4_MM38_TRIGGER",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isPointOf",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            },
+            {
+                "name": "Room_SOR42_F_20",
+                "properties": [
+                    {
+                        "predicate": "http://buildsys.org/ontologies/BrickFrame#isFedBy",
+                        "object": "Lighting_1F_M38"
+                    }
+                ]
+            }
+        ]
+    }
+]
