@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_B0ppIPFYEeOlke_H2tkzCA" targetNamespace="http://camunda.org/examples" exporter="Camunda Modeler" exporterVersion="4.3.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="linkeddata" name="get some resources" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1" name="start with date">
+      <bpmn2:outgoing>Flow_10ai5hr</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:endEvent id="EndEvent_2">
+      <bpmn2:incoming>Flow_1f3y2ii</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:scriptTask id="Activity_0ndih6j" name="Log" scriptFormat="javascript" camunda:resultVariable="triples">
+      <bpmn2:extensionElements>
+        <camunda:properties>
+          <camunda:property />
+        </camunda:properties>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="Input_3mohvqp">${response3}</camunda:inputParameter>
+          <camunda:outputParameter name="Output_24gcg0r" />
+        </camunda:inputOutput>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_0756fh0</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1f3y2ii</bpmn2:outgoing>
+      <bpmn2:script>java.lang.System.out.println(execution.getVariable("xmloutput"));
+//java.lang.System.out.println(execution.getVariable("response2").getClass());
+//java.lang.System.out.println(execution.getVariable("response3").getClass());
+//java.lang.System.out.println("Nonsense");
+//java.lang.System.out.println(execution.getVariable("Input_3mohvqp"));</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:serviceTask id="Activity_0wkwnu2" name="GET 2">
+      <bpmn2:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://people.aifb.kit.edu/co1683/2017/wild/vocab</camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/rdf+xml</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="response2">${XML(response)}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_1ct28hs</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1fx392x</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="Activity_11erpp3" name="GET 1">
+      <bpmn2:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://people.aifb.kit.edu/co1683/2017/list/vocab</camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/rdf+xml</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="response1">${XML(response)}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_1ugxj0x</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_14rx4ty</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="Flow_10ai5hr" sourceRef="StartEvent_1" targetRef="Gateway_0xx8ly9" />
+    <bpmn2:parallelGateway id="Gateway_0xx8ly9">
+      <bpmn2:incoming>Flow_10ai5hr</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1ugxj0x</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_1ct28hs</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_0juz1ne</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="Flow_1ugxj0x" sourceRef="Gateway_0xx8ly9" targetRef="Activity_11erpp3" />
+    <bpmn2:sequenceFlow id="Flow_1ct28hs" sourceRef="Gateway_0xx8ly9" targetRef="Activity_0wkwnu2" />
+    <bpmn2:sequenceFlow id="Flow_14rx4ty" sourceRef="Activity_11erpp3" targetRef="Gateway_129plev" />
+    <bpmn2:sequenceFlow id="Flow_1fx392x" sourceRef="Activity_0wkwnu2" targetRef="Gateway_129plev" />
+    <bpmn2:parallelGateway id="Gateway_129plev">
+      <bpmn2:incoming>Flow_14rx4ty</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1fx392x</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1lqq9fa</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1cveuhv</bpmn2:outgoing>
+    </bpmn2:parallelGateway>
+    <bpmn2:sequenceFlow id="Flow_1cveuhv" sourceRef="Gateway_129plev" targetRef="Activity_10ri4u9" />
+    <bpmn2:sequenceFlow id="Flow_0juz1ne" sourceRef="Gateway_0xx8ly9" targetRef="Activity_17dyh52" />
+    <bpmn2:sequenceFlow id="Flow_1lqq9fa" sourceRef="Activity_17dyh52" targetRef="Gateway_129plev" />
+    <bpmn2:scriptTask id="Activity_17dyh52" name="GET 3" scriptFormat="javascript" camunda:resultVariable="response3">
+      <bpmn2:incoming>Flow_0juz1ne</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1lqq9fa</bpmn2:outgoing>
+      <bpmn2:script>execution.setVariable("response3", java.util.Arrays.asList([java.util.Arrays.asList(["s","p","o"]),"b"]));
+java.lang.System.out.println(execution.getVariable("response3").getClass());</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="Flow_1e3u5gf" sourceRef="Activity_10ri4u9" targetRef="Activity_1ey3ile" />
+    <bpmn2:scriptTask id="Activity_10ri4u9" name="merge" scriptFormat="javascript">
+      <bpmn2:incoming>Flow_1cveuhv</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1e3u5gf</bpmn2:outgoing>
+      <bpmn2:script>var syso = java.lang.System.out;
+
+// requires absolute URIs and matching prefix definitions in the sources
+
+var root1 = execution.getVariable("response1").xPath('//*[local-name()="RDF"]').element()
+var root2elements = execution.getVariable("response2").xPath('//*[local-name()="RDF"]/*')
+
+root2elements.elementList().forEach(
+function (e) {
+root1.append(e);
+}
+);
+
+execution.setVariable("response1", root1)</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="Activity_1ey3ile" name="reason" scriptFormat="xquery" camunda:resultVariable="xmloutput">
+      <bpmn2:incoming>Flow_1e3u5gf</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0756fh0</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $namesDoc := fn:parse-xml($response1)
+
+let $ba := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;rdf:type rdf:resource="http://www.w3.org/2002/07/owl#df"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $instance in $namesDoc/rdf:RDF/rdf:Description/rdf:type/../@rdf:about
+  return 
+
+    for $class in $instance/../rdf:type/@rdf:resource
+
+    return
+ 
+ for $superclass in $class/../../../rdf:Description[@rdf:about=$class]/rdfs:subClassOf/@rdf:resource
+
+      return if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=$instance]/rdf:type[@rdf:resource=$superclass]))
+
+then (
+      &lt;rdf:Description rdf:about="{$instance}"&gt;
+        &lt;rdf:type rdf:resource="{$superclass}" /&gt;
+      &lt;/rdf:Description&gt;
+) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="Flow_0756fh0" sourceRef="Activity_1ey3ile" targetRef="Activity_0ndih6j" />
+    <bpmn2:sequenceFlow id="Flow_1f3y2ii" sourceRef="Activity_0ndih6j" targetRef="EndEvent_2" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="linkeddata">
+      <bpmndi:BPMNEdge id="Flow_1e3u5gf_di" bpmnElement="Flow_1e3u5gf">
+        <di:waypoint x="760" y="240" />
+        <di:waypoint x="830" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lqq9fa_di" bpmnElement="Flow_1lqq9fa">
+        <di:waypoint x="510" y="240" />
+        <di:waypoint x="575" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0juz1ne_di" bpmnElement="Flow_0juz1ne">
+        <di:waypoint x="325" y="240" />
+        <di:waypoint x="410" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cveuhv_di" bpmnElement="Flow_1cveuhv">
+        <di:waypoint x="625" y="240" />
+        <di:waypoint x="660" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fx392x_di" bpmnElement="Flow_1fx392x">
+        <di:waypoint x="506" y="350" />
+        <di:waypoint x="600" y="350" />
+        <di:waypoint x="600" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14rx4ty_di" bpmnElement="Flow_14rx4ty">
+        <di:waypoint x="506" y="120" />
+        <di:waypoint x="600" y="120" />
+        <di:waypoint x="600" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ct28hs_di" bpmnElement="Flow_1ct28hs">
+        <di:waypoint x="300" y="265" />
+        <di:waypoint x="300" y="350" />
+        <di:waypoint x="406" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ugxj0x_di" bpmnElement="Flow_1ugxj0x">
+        <di:waypoint x="300" y="215" />
+        <di:waypoint x="300" y="120" />
+        <di:waypoint x="406" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10ai5hr_di" bpmnElement="Flow_10ai5hr">
+        <di:waypoint x="218" y="240" />
+        <di:waypoint x="275" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0756fh0_di" bpmnElement="Flow_0756fh0">
+        <di:waypoint x="930" y="240" />
+        <di:waypoint x="1000" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f3y2ii_di" bpmnElement="Flow_1f3y2ii">
+        <di:waypoint x="1100" y="240" />
+        <di:waypoint x="1152" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="166" y="263" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0wkwnu2_di" bpmnElement="Activity_0wkwnu2">
+        <dc:Bounds x="406" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11erpp3_di" bpmnElement="Activity_11erpp3">
+        <dc:Bounds x="406" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1hoxe6z_di" bpmnElement="Gateway_0xx8ly9">
+        <dc:Bounds x="275" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1mx3mi5_di" bpmnElement="Gateway_129plev">
+        <dc:Bounds x="575" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tbodxn_di" bpmnElement="Activity_17dyh52">
+        <dc:Bounds x="410" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mbvtll_di" bpmnElement="Activity_10ri4u9">
+        <dc:Bounds x="660" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_2">
+        <dc:Bounds x="1152" y="222" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1k9al0f_di" bpmnElement="Activity_1ey3ile">
+        <dc:Bounds x="830" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qfecum_di" bpmnElement="Activity_0ndih6j">
+        <dc:Bounds x="1000" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
