@@ -19,7 +19,7 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>Flow_0qep9iu</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1f3y2ii</bpmn2:outgoing>
-      <bpmn2:script>java.lang.System.out.println(execution.getVariable("rdfs7res"));
+      <bpmn2:script>java.lang.System.out.println(execution.getVariable("rdfs10res"));
 //java.lang.System.out.println(execution.getVariable("xmloutput"));
 //java.lang.System.out.println(execution.getVariable("response2").getClass());
 //java.lang.System.out.println(execution.getVariable("response3").getClass());
@@ -169,22 +169,10 @@ execution.setVariable("response1", root1)</bpmn2:script>
     <bpmn2:sequenceFlow id="Flow_1eclgho" sourceRef="Activity_10osdr0" targetRef="Gateway_0v9pnou" />
     <bpmn2:sequenceFlow id="Flow_1lwqjez" sourceRef="Gateway_02x5171" targetRef="Activity_1hvcrvl" />
     <bpmn2:sequenceFlow id="Flow_0sxyk6e" sourceRef="Activity_1hvcrvl" targetRef="Gateway_0v9pnou" />
-    <bpmn2:task id="Activity_0ffd5oa" name="rdfs10">
-      <bpmn2:incoming>Flow_1wgpb63</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_0qs47qe</bpmn2:outgoing>
-    </bpmn2:task>
     <bpmn2:sequenceFlow id="Flow_1wgpb63" sourceRef="Gateway_02x5171" targetRef="Activity_0ffd5oa" />
     <bpmn2:sequenceFlow id="Flow_0qs47qe" sourceRef="Activity_0ffd5oa" targetRef="Gateway_0v9pnou" />
-    <bpmn2:task id="Activity_1oep7g5" name="rdfs11">
-      <bpmn2:incoming>Flow_19mgp6u</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_0ue2ydy</bpmn2:outgoing>
-    </bpmn2:task>
     <bpmn2:sequenceFlow id="Flow_19mgp6u" sourceRef="Gateway_02x5171" targetRef="Activity_1oep7g5" />
     <bpmn2:sequenceFlow id="Flow_0ue2ydy" sourceRef="Activity_1oep7g5" targetRef="Gateway_0v9pnou" />
-    <bpmn2:task id="Activity_10o7gh7" name="rdfs12">
-      <bpmn2:incoming>Flow_0nf3ohv</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_182sgvw</bpmn2:outgoing>
-    </bpmn2:task>
     <bpmn2:sequenceFlow id="Flow_0nf3ohv" sourceRef="Gateway_02x5171" targetRef="Activity_10o7gh7" />
     <bpmn2:sequenceFlow id="Flow_182sgvw" sourceRef="Activity_10o7gh7" targetRef="Gateway_0v9pnou" />
     <bpmn2:scriptTask id="Activity_1ai1t3n" name="rdfs2" scriptFormat="xquery" camunda:resultVariable="rdfs2res">
@@ -338,14 +326,6 @@ then (
   }
 &lt;/rdf:RDF&gt;</bpmn2:script>
     </bpmn2:scriptTask>
-    <bpmn2:task id="Activity_1ey3ile" name="rdfs8">
-      <bpmn2:incoming>Flow_0wwfjfo</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_0u0ovvk</bpmn2:outgoing>
-    </bpmn2:task>
-    <bpmn2:task id="Activity_19poyho" name="rdfs13">
-      <bpmn2:incoming>Flow_0rr4uy7</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_1muy71x</bpmn2:outgoing>
-    </bpmn2:task>
     <bpmn2:sequenceFlow id="Flow_0rr4uy7" sourceRef="Gateway_02x5171" targetRef="Activity_19poyho" />
     <bpmn2:sequenceFlow id="Flow_1muy71x" sourceRef="Activity_19poyho" targetRef="Gateway_0v9pnou" />
     <bpmn2:scriptTask id="Activity_0apjoup" name="rdfs4a" scriptFormat="xquery" camunda:resultVariable="rdfs4ares">
@@ -606,6 +586,203 @@ return &lt;rdf:Description rdf:about="{$xxx}"&gt;{ element { local:qname-from-ur
   }
 &lt;/rdf:RDF&gt;</bpmn2:script>
     </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="Activity_1ey3ile" name="rdfs8" scriptFormat="xquery" camunda:resultVariable="rdfs8res">
+      <bpmn2:incoming>Flow_0wwfjfo</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0u0ovvk</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $namesDoc := fn:parse-xml($response1)
+
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $xxx in $namesDoc/rdf:RDF/rdf:Description/rdf:type[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"]/../@rdf:about
+    return
+    if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=$xxx]/rdfs:subClassOf[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"]))
+    then ( 
+        &lt;rdf:Description rdf:about="{$xxx}"&gt;
+          &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource" /&gt;
+        &lt;/rdf:Description&gt;
+     ) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="Activity_0ffd5oa" name="rdfs10" scriptFormat="xquery" camunda:resultVariable="rdfs10res">
+      <bpmn2:incoming>Flow_1wgpb63</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0qs47qe</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $namesDoc := fn:parse-xml($response1)
+
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $xxx in $namesDoc/rdf:RDF/rdf:Description/rdf:type[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"]/../@rdf:about
+    return
+    if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=$xxx]/rdfs:subClassOf[@rdf:resource=$xxx]))
+    then ( 
+        &lt;rdf:Description rdf:about="{$xxx}"&gt;
+          &lt;rdfs:subClassOf rdf:resource="{$xxx}" /&gt;
+        &lt;/rdf:Description&gt;
+     ) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="Activity_1oep7g5" name="rdfs11" scriptFormat="xquery" camunda:resultVariable="rdfs11res">
+      <bpmn2:incoming>Flow_19mgp6u</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0ue2ydy</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $ba := fn:parse-xml($response1)
+
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+  &lt;rdfs:subPropertyOf rdf:resource="http://example.org/p2" /&gt;
+&lt;rdf:type rdf:resource="http://www.w3.org/2002/07/owl#df"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p2"&gt;
+    &lt;rdfs:subPropertyOf rdf:resource="http://ex.org/p3"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $xxx in $namesDoc/rdf:RDF/rdf:Description/rdfs:subClassOf/../@rdf:about
+  return 
+
+    for $yyy in $xxx/../rdfs:subClassOf/@rdf:resource
+
+    return
+ 
+ for $zzz in $namesDoc/rdf:RDF/rdf:Description[@rdf:about=$yyy]/rdfs:subClassOf/@rdf:resource
+
+      return if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=$xxx]/rdfs:subClassOf[@rdf:resource=$zzz]))
+
+then (
+      &lt;rdf:Description rdf:about="{$xxx}"&gt;
+        &lt;rdfs:subClassOf rdf:resource="{$zzz}" /&gt;
+      &lt;/rdf:Description&gt;
+) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="Activity_10o7gh7" name="rdfs12" scriptFormat="xquery" camunda:resultVariable="rdfs12res">
+      <bpmn2:incoming>Flow_0nf3ohv</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_182sgvw</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $namesDoc := fn:parse-xml($response1)
+
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $xxx in $namesDoc/rdf:RDF/rdf:Description/rdf:type[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty"]/../@rdf:about
+    return
+    if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=$xxx]/rdfs:subPropertyOf[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#member"]))
+    then ( 
+        &lt;rdf:Description rdf:about="{$xxx}"&gt;
+          &lt;rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#member" /&gt;
+        &lt;/rdf:Description&gt;
+     ) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="Activity_19poyho" name="rdfs13" scriptFormat="xquery" camunda:resultVariable="rdfs13res">
+      <bpmn2:incoming>Flow_0rr4uy7</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1muy71x</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $namesDoc := fn:parse-xml($response1)
+
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $xxx in $namesDoc/rdf:RDF/rdf:Description/rdf:type[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#Datatype"]/../@rdf:about
+    return
+    if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=$xxx]/rdfs:subClassOf[@rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"]))
+    then ( 
+        &lt;rdf:Description rdf:about="{$xxx}"&gt;
+          &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal" /&gt;
+        &lt;/rdf:Description&gt;
+     ) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
     <bpmn2:textAnnotation id="TextAnnotation_0318jk7">
       <bpmn2:text>assumption: RDF/XML with regular format( for the rules to work), ground triples (RDF:id) absolute URIs (is not fixed during retrieval)</bpmn2:text>
     </bpmn2:textAnnotation>
@@ -823,15 +1000,6 @@ return &lt;rdf:Description rdf:about="{$xxx}"&gt;{ element { local:qname-from-ur
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_2">
         <dc:Bounds x="1522" y="352" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ffd5oa_di" bpmnElement="Activity_0ffd5oa">
-        <dc:Bounds x="960" y="580" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1oep7g5_di" bpmnElement="Activity_1oep7g5">
-        <dc:Bounds x="1070" y="630" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_10o7gh7_di" bpmnElement="Activity_10o7gh7">
-        <dc:Bounds x="850" y="680" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qnf3qe_di" bpmnElement="Activity_1ai1t3n">
         <dc:Bounds x="960" y="130" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -840,12 +1008,6 @@ return &lt;rdf:Description rdf:about="{$xxx}"&gt;{ element { local:qname-from-ur
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02xu2o1_di" bpmnElement="Activity_1hvcrvl">
         <dc:Bounds x="850" y="530" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0exqreg_di" bpmnElement="Activity_1ey3ile">
-        <dc:Bounds x="1080" y="480" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_19poyho_di" bpmnElement="Activity_19poyho">
-        <dc:Bounds x="960" y="730" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1mbvtll_di" bpmnElement="Activity_10ri4u9">
         <dc:Bounds x="660" y="330" width="100" height="80" />
@@ -879,6 +1041,21 @@ return &lt;rdf:Description rdf:about="{$xxx}"&gt;{ element { local:qname-from-ur
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h6ngb8_di" bpmnElement="Activity_10osdr0">
         <dc:Bounds x="970" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e84xu8_di" bpmnElement="Activity_1ey3ile">
+        <dc:Bounds x="1080" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j6hd0a_di" bpmnElement="Activity_0ffd5oa">
+        <dc:Bounds x="960" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pf7sct_di" bpmnElement="Activity_1oep7g5">
+        <dc:Bounds x="1070" y="630" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1kkd3vk_di" bpmnElement="Activity_10o7gh7">
+        <dc:Bounds x="850" y="680" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h5o570_di" bpmnElement="Activity_19poyho">
+        <dc:Bounds x="960" y="730" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1rhbiav_di" bpmnElement="Association_1rhbiav">
         <di:waypoint x="710" y="330" />
