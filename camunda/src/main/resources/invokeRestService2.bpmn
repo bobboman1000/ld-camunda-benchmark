@@ -13,12 +13,13 @@
           <camunda:property />
         </camunda:properties>
         <camunda:inputOutput>
+          <camunda:inputParameter name="Input_3mohvqp" />
           <camunda:outputParameter name="Output_24gcg0r" />
         </camunda:inputOutput>
       </bpmn2:extensionElements>
-      <bpmn2:incoming>Flow_0qep9iu</bpmn2:incoming>
+      <bpmn2:incoming>Flow_14atflj</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1f3y2ii</bpmn2:outgoing>
-      <bpmn2:script>java.lang.System.out.println(execution.getVariable("rdfs10res"));
+      <bpmn2:script>java.lang.System.out.println(execution.getVariable("response1"));
 //java.lang.System.out.println(execution.getVariable("xmloutput"));
 //java.lang.System.out.println(execution.getVariable("response2").getClass());
 //java.lang.System.out.println(execution.getVariable("response3").getClass());
@@ -29,14 +30,14 @@
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://www.w3.org/1999/02/22-rdf-syntax-ns#</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://www.w3.org/2000/01/rdf-schema</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Accept">application/rdf+xml</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:outputParameter name="response2">${XML(response)}</camunda:outputParameter>
+            <camunda:outputParameter name="response2">${S('&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;')}</camunda:outputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
@@ -48,7 +49,7 @@
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://people.aifb.kit.edu/co1683/2017/list/vocab</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://purl.org/list/vocab</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
@@ -69,6 +70,8 @@
       <bpmn2:outgoing>Flow_1ugxj0x</bpmn2:outgoing>
       <bpmn2:outgoing>Flow_1ct28hs</bpmn2:outgoing>
       <bpmn2:outgoing>Flow_0juz1ne</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_1x4ry91</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_0t7z0ri</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="Flow_1ugxj0x" sourceRef="Gateway_0xx8ly9" targetRef="Activity_11erpp3" />
     <bpmn2:sequenceFlow id="Flow_1ct28hs" sourceRef="Gateway_0xx8ly9" targetRef="Activity_0wkwnu2" />
@@ -78,19 +81,32 @@
       <bpmn2:incoming>Flow_14rx4ty</bpmn2:incoming>
       <bpmn2:incoming>Flow_1fx392x</bpmn2:incoming>
       <bpmn2:incoming>Flow_1lqq9fa</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1s3putw</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1910bim</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1cveuhv</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="Flow_1cveuhv" sourceRef="Gateway_129plev" targetRef="Activity_10ri4u9" />
+    <bpmn2:sequenceFlow id="Flow_0juz1ne" sourceRef="Gateway_0xx8ly9" targetRef="Activity_17dyh52" />
+    <bpmn2:sequenceFlow id="Flow_1lqq9fa" sourceRef="Activity_17dyh52" targetRef="Gateway_129plev" />
+    <bpmn2:scriptTask id="Activity_17dyh52" name="GET 3" scriptFormat="javascript" camunda:resultVariable="response3">
+      <bpmn2:incoming>Flow_0juz1ne</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1lqq9fa</bpmn2:outgoing>
+      <bpmn2:script>execution.setVariable("response3", java.util.Arrays.asList([java.util.Arrays.asList(["s","p","o"]),"b"]));
+java.lang.System.out.println(execution.getVariable("response3").getClass());</bpmn2:script>
+    </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="Flow_1e3u5gf" sourceRef="Activity_10ri4u9" targetRef="Gateway_02x5171" />
-    <bpmn2:scriptTask id="Activity_10ri4u9" name="merge" scriptFormat="javascript">
+    <bpmn2:scriptTask id="Activity_10ri4u9" name="Merge" scriptFormat="javascript">
       <bpmn2:incoming>Flow_1cveuhv</bpmn2:incoming>
+      <bpmn2:incoming>Flow_19uq9qq</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1e3u5gf</bpmn2:outgoing>
       <bpmn2:script>var syso = java.lang.System.out;
 
 // requires absolute URIs and matching prefix definitions in the sources
 
-var root1 = execution.getVariable("response1").xPath('//*[local-name()="RDF"]').element()
-var root2elements = execution.getVariable("response2").xPath('//*[local-name()="RDF"]/*')
+var root1 = execution.getVariable("response1").xPath('/*[local-name()="RDF"]').element()
+var root2elements = execution.getVariable("response2").xPath('/*[local-name()="RDF"]')
+var rdfax = execution.getVariable("rdf-ax-triples").xPath('/*[local-name()="RDF"]')
+var rdfsax = execution.getVariable("rdfs-ax-triples").xPath('/*[local-name()="RDF"]')
 
 root2elements.elementList().forEach(
 function (e) {
@@ -98,7 +114,19 @@ root1.append(e);
 }
 );
 
-execution.setVariable("response1", root1)</bpmn2:script>
+rdfax.elementList().forEach(
+function (e) {
+root1.append(e);
+}
+);
+
+rdfsax.elementList().forEach(
+function (e) {
+root1.append(e);
+}
+);
+
+//execution.setVariable("merged1", org.camunda.spin.Spin.XML(root1))</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="Flow_1f3y2ii" sourceRef="Activity_0ndih6j" targetRef="EndEvent_2" />
     <bpmn2:parallelGateway id="Gateway_02x5171">
@@ -117,6 +145,8 @@ execution.setVariable("response1", root1)</bpmn2:script>
       <bpmn2:outgoing>Flow_19mgp6u</bpmn2:outgoing>
       <bpmn2:outgoing>Flow_0nf3ohv</bpmn2:outgoing>
       <bpmn2:outgoing>Flow_0rr4uy7</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_1djvl20</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_1e6mqva</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:task id="Activity_1qqjdii" name="rdfs1">
       <bpmn2:incoming>Flow_1df7gws</bpmn2:incoming>
@@ -139,9 +169,11 @@ execution.setVariable("response1", root1)</bpmn2:script>
       <bpmn2:incoming>Flow_0ue2ydy</bpmn2:incoming>
       <bpmn2:incoming>Flow_182sgvw</bpmn2:incoming>
       <bpmn2:incoming>Flow_1muy71x</bpmn2:incoming>
+      <bpmn2:incoming>Flow_01iztd9</bpmn2:incoming>
+      <bpmn2:incoming>Flow_102y4hk</bpmn2:incoming>
       <bpmn2:outgoing>Flow_0qep9iu</bpmn2:outgoing>
     </bpmn2:parallelGateway>
-    <bpmn2:sequenceFlow id="Flow_0qep9iu" sourceRef="Gateway_0v9pnou" targetRef="Activity_0ndih6j" />
+    <bpmn2:sequenceFlow id="Flow_0qep9iu" sourceRef="Gateway_0v9pnou" targetRef="Activity_1k0le0g" />
     <bpmn2:sequenceFlow id="Flow_0u0ovvk" sourceRef="Activity_1ey3ile" targetRef="Gateway_0v9pnou" />
     <bpmn2:sequenceFlow id="Flow_1r667vo" sourceRef="Gateway_02x5171" targetRef="Activity_1ai1t3n" />
     <bpmn2:sequenceFlow id="Flow_19bcvn7" sourceRef="Activity_1ai1t3n" targetRef="Gateway_0v9pnou" />
@@ -330,14 +362,13 @@ declare variable $response1 external;
 
 let $ba := fn:parse-xml($response1)
 
-let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
   &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
     &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
   &lt;/rdf:Description&gt;
   &lt;rdf:Description rdf:about="http://example.org/p"&gt;
     &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
-&lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
   &lt;/rdf:Description&gt;
 &lt;/rdf:RDF&gt;')
 
@@ -538,8 +569,7 @@ declare function local:last-index-of ( $string as xs:string, $searchstring as xs
 
 let $ba := fn:parse-xml($response1)
 
-let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:ex="http://example.org/"&gt;
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:ex="http://example.org/"&gt;
   &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
     &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
     &lt;ex:p2 rdf:resource="http://ex.prg/bla"/&gt;
@@ -550,7 +580,7 @@ let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;rdf:type rdf:resource="http://www.w3.org/2002/07/owl#df"/&gt;
   &lt;/rdf:Description&gt;
   &lt;rdf:Description rdf:about="http://example.org/p2"&gt;
-    &lt;rdfs:subPropertyOf rdf:resource="http://ex.org/a#p3"/&gt;
+    &lt;rdfs:subPropertyOf rdf:resource="http://ex.org/a#pv3v"/&gt;
   &lt;/rdf:Description&gt;
 &lt;/rdf:RDF&gt;')
 
@@ -774,291 +804,455 @@ return
   }
 &lt;/rdf:RDF&gt;</bpmn2:script>
     </bpmn2:scriptTask>
-    <bpmn2:sequenceFlow id="Flow_0juz1ne" sourceRef="Gateway_0xx8ly9" targetRef="Activity_17dyh52" />
-    <bpmn2:scriptTask id="Activity_17dyh52" name="GET 3" scriptFormat="javascript" camunda:resultVariable="response3">
-      <bpmn2:incoming>Flow_0juz1ne</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_1lqq9fa</bpmn2:outgoing>
-      <bpmn2:script>execution.setVariable("response3", java.util.Arrays.asList([java.util.Arrays.asList(["s","p","o"]),"b"]));
-java.lang.System.out.println(execution.getVariable("response3").getClass());</bpmn2:script>
+    <bpmn2:sequenceFlow id="Flow_1x4ry91" sourceRef="Gateway_0xx8ly9" targetRef="Activity_1o7p7vd" />
+    <bpmn2:sequenceFlow id="Flow_1s3putw" sourceRef="Activity_1o7p7vd" targetRef="Gateway_129plev" />
+    <bpmn2:scriptTask id="Activity_1o7p7vd" name="Assert RDF Axiomatic Triples" scriptFormat="javascript">
+      <bpmn2:incoming>Flow_1x4ry91</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1s3putw</bpmn2:outgoing>
+      <bpmn2:script>var ret = org.camunda.spin.Spin.XML('&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;   &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"&gt;&lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;&lt;/rdf:Description&gt;&lt;/rdf:RDF&gt;')
+execution.setVariable("rdf-ax-triples", ret)</bpmn2:script>
     </bpmn2:scriptTask>
-    <bpmn2:sequenceFlow id="Flow_1lqq9fa" sourceRef="Activity_17dyh52" targetRef="Gateway_129plev" />
+    <bpmn2:scriptTask id="Activity_1k0le0g" name="Merge Rule Output" scriptFormat="javascript">
+      <bpmn2:incoming>Flow_0qep9iu</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_01dnvg7</bpmn2:outgoing>
+      <bpmn2:script>var syso = java.lang.System.out;
+
+// requires absolute URIs and matching prefix definitions in the sources
+
+//var root1 = execution.getVariable("response1").xPath('//*[local-name()="RDF"]').element()
+//var root2elements = execution.getVariable("response2").xPath('//*[local-name()="RDF"]/*')
+
+//root2elements.elementList().forEach(
+//function (e) {
+//root1.append(e);
+//}
+//);
+
+//execution.setVariable("response1", root1)</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="Flow_01dnvg7" sourceRef="Activity_1k0le0g" targetRef="Gateway_00cl33q" />
+    <bpmn2:task id="Activity_042ylbg" name="rdfD1">
+      <bpmn2:incoming>Flow_1djvl20</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_01iztd9</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="Flow_1djvl20" sourceRef="Gateway_02x5171" targetRef="Activity_042ylbg" />
+    <bpmn2:sequenceFlow id="Flow_01iztd9" sourceRef="Activity_042ylbg" targetRef="Gateway_0v9pnou" />
+    <bpmn2:sequenceFlow id="Flow_1e6mqva" sourceRef="Gateway_02x5171" targetRef="Activity_1o6wjno" />
+    <bpmn2:sequenceFlow id="Flow_102y4hk" sourceRef="Activity_1o6wjno" targetRef="Gateway_0v9pnou" />
+    <bpmn2:scriptTask id="Activity_117go3h" name="Assert RDFS Axiomatic Triples" scriptFormat="javascript">
+      <bpmn2:incoming>Flow_0t7z0ri</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1910bim</bpmn2:outgoing>
+      <bpmn2:script>var ret = org.camunda.spin.Spin.XML('&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#domain"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#range"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#member"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#label"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#domain"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#range"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#member"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#label"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;    &lt;rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/&gt;  &lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Datatype"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;  &lt;/rdf:Description&gt;&lt;/rdf:RDF&gt;')
+// execution.setVariable("rdfs-ax-triples", ret)
+execution.setVariable("rdfs-ax-triples", org.camunda.spin.Spin.XML('&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;'))</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="Flow_0t7z0ri" sourceRef="Gateway_0xx8ly9" targetRef="Activity_117go3h" />
+    <bpmn2:sequenceFlow id="Flow_1910bim" sourceRef="Activity_117go3h" targetRef="Gateway_129plev" />
+    <bpmn2:scriptTask id="Activity_1o6wjno" name="rdfD2" scriptFormat="xquery" camunda:resultVariable="rdfD2res">
+      <bpmn2:incoming>Flow_1e6mqva</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_102y4hk</bpmn2:outgoing>
+      <bpmn2:script>declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace owl="http://www.w3.org/2002/07/owl#";
+declare namespace rdfs="http://www.w3.org/2000/01/rdf-schema#";
+
+declare variable $response1 external;
+
+let $ba := fn:parse-xml($response1)
+
+let $namesDoc := fn:parse-xml('&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/list/vocab#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/&gt;
+  &lt;/rdf:Description&gt;
+  &lt;rdf:Description rdf:about="http://example.org/p"&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+    &lt;rdf:type rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;/rdf:Description&gt;
+&lt;/rdf:RDF&gt;')
+
+return
+&lt;rdf:RDF&gt;
+  {
+  for $aaa in $namesDoc/rdf:RDF/rdf:Description/*
+    return
+    if (empty($namesDoc/rdf:RDF/rdf:Description[@rdf:about=fn:concat(fn:namespace-uri($aaa),fn:local-name($aaa))]/rdf:type[@rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"]))
+    then ( 
+        &lt;rdf:Description rdf:about="{fn:concat(fn:namespace-uri($aaa),fn:local-name($aaa))}"&gt;
+          &lt;rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property" /&gt;
+        &lt;/rdf:Description&gt;
+     ) else ()
+
+  }
+&lt;/rdf:RDF&gt;</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:exclusiveGateway id="Gateway_00cl33q" name="New Data Entailed?">
+      <bpmn2:incoming>Flow_01dnvg7</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_14atflj</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_19uq9qq</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_14atflj" name="No" sourceRef="Gateway_00cl33q" targetRef="Activity_0ndih6j">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_19uq9qq" name="Yes" sourceRef="Gateway_00cl33q" targetRef="Activity_10ri4u9">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
     <bpmn2:textAnnotation id="TextAnnotation_0318jk7">
-      <bpmn2:text>assumption: RDF/XML with regular format( for the rules to work), ground triples (RDF:id) absolute URIs (is not fixed during retrieval)</bpmn2:text>
+      <bpmn2:text>assumption: RDF/XML with regular format( for the rules to work), ground triples (RDF:id), no literals, absolute URIs (is not fixed during retrieval)</bpmn2:text>
     </bpmn2:textAnnotation>
     <bpmn2:association id="Association_1rhbiav" sourceRef="Activity_10ri4u9" targetRef="TextAnnotation_0318jk7" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="linkeddata">
-      <bpmndi:BPMNEdge id="Flow_1muy71x_di" bpmnElement="Flow_1muy71x">
-        <di:waypoint x="1060" y="770" />
-        <di:waypoint x="1240" y="770" />
-        <di:waypoint x="1240" y="395" />
+      <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
+        <dc:Bounds x="688" y="230" width="100" height="157" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1f3y2ii_di" bpmnElement="Flow_1f3y2ii">
+        <di:waypoint x="1750" y="470" />
+        <di:waypoint x="1795" y="470" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rr4uy7_di" bpmnElement="Flow_0rr4uy7">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="770" />
-        <di:waypoint x="960" y="770" />
+      <bpmndi:BPMNEdge id="Flow_1e3u5gf_di" bpmnElement="Flow_1e3u5gf">
+        <di:waypoint x="760" y="470" />
+        <di:waypoint x="795" y="470" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_182sgvw_di" bpmnElement="Flow_182sgvw">
-        <di:waypoint x="950" y="720" />
-        <di:waypoint x="1240" y="720" />
-        <di:waypoint x="1240" y="395" />
+      <bpmndi:BPMNEdge id="Flow_1lqq9fa_di" bpmnElement="Flow_1lqq9fa">
+        <di:waypoint x="506" y="470" />
+        <di:waypoint x="575" y="470" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0nf3ohv_di" bpmnElement="Flow_0nf3ohv">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="720" />
-        <di:waypoint x="850" y="720" />
+      <bpmndi:BPMNEdge id="Flow_0juz1ne_di" bpmnElement="Flow_0juz1ne">
+        <di:waypoint x="325" y="470" />
+        <di:waypoint x="406" y="470" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ue2ydy_di" bpmnElement="Flow_0ue2ydy">
-        <di:waypoint x="1170" y="670" />
-        <di:waypoint x="1240" y="670" />
-        <di:waypoint x="1240" y="395" />
+      <bpmndi:BPMNEdge id="Flow_1cveuhv_di" bpmnElement="Flow_1cveuhv">
+        <di:waypoint x="625" y="470" />
+        <di:waypoint x="660" y="470" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19mgp6u_di" bpmnElement="Flow_19mgp6u">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="670" />
-        <di:waypoint x="1070" y="670" />
+      <bpmndi:BPMNEdge id="Flow_1fx392x_di" bpmnElement="Flow_1fx392x">
+        <di:waypoint x="506" y="570" />
+        <di:waypoint x="600" y="570" />
+        <di:waypoint x="600" y="495" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0qs47qe_di" bpmnElement="Flow_0qs47qe">
-        <di:waypoint x="1060" y="620" />
-        <di:waypoint x="1240" y="620" />
-        <di:waypoint x="1240" y="395" />
+      <bpmndi:BPMNEdge id="Flow_14rx4ty_di" bpmnElement="Flow_14rx4ty">
+        <di:waypoint x="506" y="340" />
+        <di:waypoint x="600" y="340" />
+        <di:waypoint x="600" y="445" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1wgpb63_di" bpmnElement="Flow_1wgpb63">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="620" />
-        <di:waypoint x="960" y="620" />
+      <bpmndi:BPMNEdge id="Flow_1ct28hs_di" bpmnElement="Flow_1ct28hs">
+        <di:waypoint x="300" y="495" />
+        <di:waypoint x="300" y="570" />
+        <di:waypoint x="406" y="570" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0sxyk6e_di" bpmnElement="Flow_0sxyk6e">
-        <di:waypoint x="950" y="570" />
-        <di:waypoint x="1240" y="570" />
-        <di:waypoint x="1240" y="395" />
+      <bpmndi:BPMNEdge id="Flow_1ugxj0x_di" bpmnElement="Flow_1ugxj0x">
+        <di:waypoint x="300" y="445" />
+        <di:waypoint x="300" y="340" />
+        <di:waypoint x="406" y="340" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1lwqjez_di" bpmnElement="Flow_1lwqjez">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="570" />
-        <di:waypoint x="850" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1eclgho_di" bpmnElement="Flow_1eclgho">
-        <di:waypoint x="1070" y="470" />
-        <di:waypoint x="1240" y="470" />
-        <di:waypoint x="1240" y="395" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1qzx1aj_di" bpmnElement="Flow_1qzx1aj">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="470" />
-        <di:waypoint x="970" y="470" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_129g1sd_di" bpmnElement="Flow_129g1sd">
-        <di:waypoint x="950" y="420" />
-        <di:waypoint x="1240" y="420" />
-        <di:waypoint x="1240" y="395" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1xkrss2_di" bpmnElement="Flow_1xkrss2">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="420" />
-        <di:waypoint x="850" y="420" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0wwfjfo_di" bpmnElement="Flow_0wwfjfo">
-        <di:waypoint x="820" y="395" />
-        <di:waypoint x="820" y="520" />
-        <di:waypoint x="1080" y="520" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1limz2f_di" bpmnElement="Flow_1limz2f">
-        <di:waypoint x="1170" y="370" />
-        <di:waypoint x="1215" y="370" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ki5r9y_di" bpmnElement="Flow_0ki5r9y">
-        <di:waypoint x="845" y="370" />
-        <di:waypoint x="1070" y="370" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0rdjvub_di" bpmnElement="Flow_0rdjvub">
-        <di:waypoint x="1060" y="320" />
-        <di:waypoint x="1240" y="320" />
-        <di:waypoint x="1240" y="345" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0brq39e_di" bpmnElement="Flow_0brq39e">
-        <di:waypoint x="820" y="345" />
-        <di:waypoint x="820" y="320" />
-        <di:waypoint x="960" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09y9zj9_di" bpmnElement="Flow_09y9zj9">
-        <di:waypoint x="950" y="270" />
-        <di:waypoint x="1240" y="270" />
-        <di:waypoint x="1240" y="345" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_132ah4r_di" bpmnElement="Flow_132ah4r">
-        <di:waypoint x="820" y="345" />
-        <di:waypoint x="820" y="270" />
-        <di:waypoint x="850" y="270" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0uc0piu_di" bpmnElement="Flow_0uc0piu">
-        <di:waypoint x="1170" y="219" />
-        <di:waypoint x="1240" y="219" />
-        <di:waypoint x="1240" y="345" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1g7a9zk_di" bpmnElement="Flow_1g7a9zk">
-        <di:waypoint x="820" y="345" />
-        <di:waypoint x="820" y="219" />
-        <di:waypoint x="1070" y="219" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19bcvn7_di" bpmnElement="Flow_19bcvn7">
-        <di:waypoint x="1060" y="170" />
-        <di:waypoint x="1240" y="170" />
-        <di:waypoint x="1240" y="345" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1r667vo_di" bpmnElement="Flow_1r667vo">
-        <di:waypoint x="820" y="345" />
-        <di:waypoint x="820" y="170" />
-        <di:waypoint x="960" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0u0ovvk_di" bpmnElement="Flow_0u0ovvk">
-        <di:waypoint x="1180" y="520" />
-        <di:waypoint x="1240" y="520" />
-        <di:waypoint x="1240" y="395" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0qep9iu_di" bpmnElement="Flow_0qep9iu">
-        <di:waypoint x="1265" y="370" />
-        <di:waypoint x="1370" y="370" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0akbq5y_di" bpmnElement="Flow_0akbq5y">
-        <di:waypoint x="950" y="120" />
-        <di:waypoint x="1240" y="120" />
-        <di:waypoint x="1240" y="345" />
+      <bpmndi:BPMNEdge id="Flow_10ai5hr_di" bpmnElement="Flow_10ai5hr">
+        <di:waypoint x="218" y="470" />
+        <di:waypoint x="275" y="470" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1df7gws_di" bpmnElement="Flow_1df7gws">
-        <di:waypoint x="820" y="345" />
+        <di:waypoint x="820" y="445" />
+        <di:waypoint x="820" y="220" />
+        <di:waypoint x="850" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0akbq5y_di" bpmnElement="Flow_0akbq5y">
+        <di:waypoint x="950" y="220" />
+        <di:waypoint x="1240" y="220" />
+        <di:waypoint x="1240" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qep9iu_di" bpmnElement="Flow_0qep9iu">
+        <di:waypoint x="1265" y="470" />
+        <di:waypoint x="1310" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u0ovvk_di" bpmnElement="Flow_0u0ovvk">
+        <di:waypoint x="1180" y="620" />
+        <di:waypoint x="1240" y="620" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r667vo_di" bpmnElement="Flow_1r667vo">
+        <di:waypoint x="820" y="445" />
+        <di:waypoint x="820" y="270" />
+        <di:waypoint x="960" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19bcvn7_di" bpmnElement="Flow_19bcvn7">
+        <di:waypoint x="1060" y="270" />
+        <di:waypoint x="1240" y="270" />
+        <di:waypoint x="1240" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1g7a9zk_di" bpmnElement="Flow_1g7a9zk">
+        <di:waypoint x="820" y="445" />
+        <di:waypoint x="820" y="319" />
+        <di:waypoint x="1070" y="319" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uc0piu_di" bpmnElement="Flow_0uc0piu">
+        <di:waypoint x="1170" y="319" />
+        <di:waypoint x="1240" y="319" />
+        <di:waypoint x="1240" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_132ah4r_di" bpmnElement="Flow_132ah4r">
+        <di:waypoint x="820" y="445" />
+        <di:waypoint x="820" y="370" />
+        <di:waypoint x="850" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09y9zj9_di" bpmnElement="Flow_09y9zj9">
+        <di:waypoint x="950" y="370" />
+        <di:waypoint x="1240" y="370" />
+        <di:waypoint x="1240" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0brq39e_di" bpmnElement="Flow_0brq39e">
+        <di:waypoint x="820" y="445" />
+        <di:waypoint x="820" y="420" />
+        <di:waypoint x="960" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rdjvub_di" bpmnElement="Flow_0rdjvub">
+        <di:waypoint x="1060" y="420" />
+        <di:waypoint x="1240" y="420" />
+        <di:waypoint x="1240" y="445" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ki5r9y_di" bpmnElement="Flow_0ki5r9y">
+        <di:waypoint x="845" y="470" />
+        <di:waypoint x="1070" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1limz2f_di" bpmnElement="Flow_1limz2f">
+        <di:waypoint x="1170" y="470" />
+        <di:waypoint x="1215" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wwfjfo_di" bpmnElement="Flow_0wwfjfo">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="620" />
+        <di:waypoint x="1080" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xkrss2_di" bpmnElement="Flow_1xkrss2">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="520" />
+        <di:waypoint x="850" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_129g1sd_di" bpmnElement="Flow_129g1sd">
+        <di:waypoint x="950" y="520" />
+        <di:waypoint x="1240" y="520" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qzx1aj_di" bpmnElement="Flow_1qzx1aj">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="570" />
+        <di:waypoint x="970" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eclgho_di" bpmnElement="Flow_1eclgho">
+        <di:waypoint x="1070" y="570" />
+        <di:waypoint x="1240" y="570" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lwqjez_di" bpmnElement="Flow_1lwqjez">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="670" />
+        <di:waypoint x="850" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0sxyk6e_di" bpmnElement="Flow_0sxyk6e">
+        <di:waypoint x="950" y="670" />
+        <di:waypoint x="1240" y="670" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wgpb63_di" bpmnElement="Flow_1wgpb63">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="720" />
+        <di:waypoint x="960" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qs47qe_di" bpmnElement="Flow_0qs47qe">
+        <di:waypoint x="1060" y="720" />
+        <di:waypoint x="1240" y="720" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19mgp6u_di" bpmnElement="Flow_19mgp6u">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="770" />
+        <di:waypoint x="1070" y="770" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ue2ydy_di" bpmnElement="Flow_0ue2ydy">
+        <di:waypoint x="1170" y="770" />
+        <di:waypoint x="1240" y="770" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nf3ohv_di" bpmnElement="Flow_0nf3ohv">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="820" />
+        <di:waypoint x="850" y="820" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_182sgvw_di" bpmnElement="Flow_182sgvw">
+        <di:waypoint x="950" y="820" />
+        <di:waypoint x="1240" y="820" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rr4uy7_di" bpmnElement="Flow_0rr4uy7">
+        <di:waypoint x="820" y="495" />
+        <di:waypoint x="820" y="870" />
+        <di:waypoint x="960" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1muy71x_di" bpmnElement="Flow_1muy71x">
+        <di:waypoint x="1060" y="870" />
+        <di:waypoint x="1240" y="870" />
+        <di:waypoint x="1240" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1x4ry91_di" bpmnElement="Flow_1x4ry91">
+        <di:waypoint x="300" y="495" />
+        <di:waypoint x="300" y="680" />
+        <di:waypoint x="406" y="680" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s3putw_di" bpmnElement="Flow_1s3putw">
+        <di:waypoint x="506" y="680" />
+        <di:waypoint x="600" y="680" />
+        <di:waypoint x="600" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01dnvg7_di" bpmnElement="Flow_01dnvg7">
+        <di:waypoint x="1410" y="470" />
+        <di:waypoint x="1465" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1djvl20_di" bpmnElement="Flow_1djvl20">
+        <di:waypoint x="820" y="445" />
         <di:waypoint x="820" y="120" />
         <di:waypoint x="850" y="120" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1f3y2ii_di" bpmnElement="Flow_1f3y2ii">
-        <di:waypoint x="1470" y="370" />
-        <di:waypoint x="1522" y="370" />
+      <bpmndi:BPMNEdge id="Flow_01iztd9_di" bpmnElement="Flow_01iztd9">
+        <di:waypoint x="950" y="120" />
+        <di:waypoint x="1240" y="120" />
+        <di:waypoint x="1240" y="445" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1e3u5gf_di" bpmnElement="Flow_1e3u5gf">
-        <di:waypoint x="760" y="370" />
-        <di:waypoint x="795" y="370" />
+      <bpmndi:BPMNEdge id="Flow_1e6mqva_di" bpmnElement="Flow_1e6mqva">
+        <di:waypoint x="820" y="445" />
+        <di:waypoint x="820" y="170" />
+        <di:waypoint x="960" y="170" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1lqq9fa_di" bpmnElement="Flow_1lqq9fa">
-        <di:waypoint x="506" y="370" />
-        <di:waypoint x="575" y="370" />
+      <bpmndi:BPMNEdge id="Flow_102y4hk_di" bpmnElement="Flow_102y4hk">
+        <di:waypoint x="1060" y="170" />
+        <di:waypoint x="1240" y="170" />
+        <di:waypoint x="1240" y="445" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0juz1ne_di" bpmnElement="Flow_0juz1ne">
-        <di:waypoint x="325" y="370" />
-        <di:waypoint x="406" y="370" />
+      <bpmndi:BPMNEdge id="Flow_0t7z0ri_di" bpmnElement="Flow_0t7z0ri">
+        <di:waypoint x="300" y="495" />
+        <di:waypoint x="300" y="780" />
+        <di:waypoint x="406" y="780" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1cveuhv_di" bpmnElement="Flow_1cveuhv">
-        <di:waypoint x="625" y="370" />
-        <di:waypoint x="660" y="370" />
+      <bpmndi:BPMNEdge id="Flow_1910bim_di" bpmnElement="Flow_1910bim">
+        <di:waypoint x="506" y="780" />
+        <di:waypoint x="600" y="780" />
+        <di:waypoint x="600" y="495" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1fx392x_di" bpmnElement="Flow_1fx392x">
-        <di:waypoint x="506" y="470" />
-        <di:waypoint x="600" y="470" />
-        <di:waypoint x="600" y="395" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_14rx4ty_di" bpmnElement="Flow_14rx4ty">
-        <di:waypoint x="506" y="240" />
-        <di:waypoint x="600" y="240" />
-        <di:waypoint x="600" y="345" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ct28hs_di" bpmnElement="Flow_1ct28hs">
-        <di:waypoint x="300" y="395" />
-        <di:waypoint x="300" y="470" />
-        <di:waypoint x="406" y="470" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ugxj0x_di" bpmnElement="Flow_1ugxj0x">
-        <di:waypoint x="300" y="345" />
-        <di:waypoint x="300" y="240" />
-        <di:waypoint x="406" y="240" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10ai5hr_di" bpmnElement="Flow_10ai5hr">
-        <di:waypoint x="218" y="370" />
-        <di:waypoint x="275" y="370" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_1">
-        <dc:Bounds x="182" y="352" width="36" height="36" />
+      <bpmndi:BPMNEdge id="Flow_14atflj_di" bpmnElement="Flow_14atflj">
+        <di:waypoint x="1515" y="470" />
+        <di:waypoint x="1650" y="470" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="166" y="393" width="69" height="14" />
+          <dc:Bounds x="1575" y="452" width="15" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_2">
-        <dc:Bounds x="1522" y="352" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qfecum_di" bpmnElement="Activity_0ndih6j">
-        <dc:Bounds x="1370" y="330" width="100" height="80" />
-      </bpmndi:BPMNShape>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19uq9qq_di" bpmnElement="Flow_19uq9qq">
+        <di:waypoint x="1490" y="495" />
+        <di:waypoint x="1490" y="960" />
+        <di:waypoint x="710" y="960" />
+        <di:waypoint x="710" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1091" y="942" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_0wkwnu2_di" bpmnElement="Activity_0wkwnu2">
-        <dc:Bounds x="406" y="430" width="100" height="80" />
+        <dc:Bounds x="406" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_11erpp3_di" bpmnElement="Activity_11erpp3">
-        <dc:Bounds x="406" y="200" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1hoxe6z_di" bpmnElement="Gateway_0xx8ly9">
-        <dc:Bounds x="275" y="345" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1mx3mi5_di" bpmnElement="Gateway_129plev">
-        <dc:Bounds x="575" y="345" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0tbodxn_di" bpmnElement="Activity_17dyh52">
-        <dc:Bounds x="406" y="330" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1mbvtll_di" bpmnElement="Activity_10ri4u9">
-        <dc:Bounds x="660" y="330" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1e3gqh0_di" bpmnElement="Gateway_02x5171">
-        <dc:Bounds x="795" y="345" width="50" height="50" />
+        <dc:Bounds x="406" y="300" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1qqjdii_di" bpmnElement="Activity_1qqjdii">
-        <dc:Bounds x="850" y="80" width="100" height="80" />
+        <dc:Bounds x="850" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1e3gqh0_di" bpmnElement="Gateway_02x5171">
+        <dc:Bounds x="795" y="445" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1795zpn_di" bpmnElement="Gateway_0v9pnou">
-        <dc:Bounds x="1215" y="345" width="50" height="50" />
+        <dc:Bounds x="1215" y="445" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qnf3qe_di" bpmnElement="Activity_1ai1t3n">
-        <dc:Bounds x="960" y="130" width="100" height="80" />
+        <dc:Bounds x="960" y="230" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_16ibb1u_di" bpmnElement="Activity_1xeb02r">
-        <dc:Bounds x="1070" y="179" width="100" height="80" />
+        <dc:Bounds x="1070" y="279" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02xu2o1_di" bpmnElement="Activity_1hvcrvl">
-        <dc:Bounds x="850" y="530" width="100" height="80" />
+        <dc:Bounds x="850" y="630" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mbvtll_di" bpmnElement="Activity_10ri4u9">
+        <dc:Bounds x="660" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1mx3mi5_di" bpmnElement="Gateway_129plev">
+        <dc:Bounds x="575" y="445" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1hoxe6z_di" bpmnElement="Gateway_0xx8ly9">
+        <dc:Bounds x="275" y="445" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tbodxn_di" bpmnElement="Activity_17dyh52">
+        <dc:Bounds x="406" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="166" y="493" width="69" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0tmlwbg_di" bpmnElement="Activity_0apjoup">
-        <dc:Bounds x="850" y="230" width="100" height="80" />
+        <dc:Bounds x="850" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_036p32r_di" bpmnElement="Activity_081xarg">
-        <dc:Bounds x="960" y="280" width="100" height="80" />
+        <dc:Bounds x="960" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1vhohzs_di" bpmnElement="Activity_0srmv3t">
-        <dc:Bounds x="1070" y="330" width="100" height="80" />
+        <dc:Bounds x="1070" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08j9ytf_di" bpmnElement="Activity_0e5f6qw">
-        <dc:Bounds x="850" y="380" width="100" height="80" />
+        <dc:Bounds x="850" y="480" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h6ngb8_di" bpmnElement="Activity_10osdr0">
-        <dc:Bounds x="970" y="430" width="100" height="80" />
+        <dc:Bounds x="970" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0e84xu8_di" bpmnElement="Activity_1ey3ile">
-        <dc:Bounds x="1080" y="480" width="100" height="80" />
+        <dc:Bounds x="1080" y="580" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j6hd0a_di" bpmnElement="Activity_0ffd5oa">
-        <dc:Bounds x="960" y="580" width="100" height="80" />
+        <dc:Bounds x="960" y="680" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1pf7sct_di" bpmnElement="Activity_1oep7g5">
-        <dc:Bounds x="1070" y="630" width="100" height="80" />
+        <dc:Bounds x="1070" y="730" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1kkd3vk_di" bpmnElement="Activity_10o7gh7">
-        <dc:Bounds x="850" y="680" width="100" height="80" />
+        <dc:Bounds x="850" y="780" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1h5o570_di" bpmnElement="Activity_19poyho">
-        <dc:Bounds x="960" y="730" width="100" height="80" />
+        <dc:Bounds x="960" y="830" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
-        <dc:Bounds x="688" y="140" width="100" height="138" />
+      <bpmndi:BPMNShape id="Activity_1k0le0g_di" bpmnElement="Activity_1k0le0g">
+        <dc:Bounds x="1310" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_042ylbg_di" bpmnElement="Activity_042ylbg">
+        <dc:Bounds x="850" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_117go3h_di" bpmnElement="Activity_117go3h">
+        <dc:Bounds x="406" y="740" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vcqvgl_di" bpmnElement="Activity_1o7p7vd">
+        <dc:Bounds x="406" y="640" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0okktv4_di" bpmnElement="Activity_1o6wjno">
+        <dc:Bounds x="960" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_00cl33q_di" bpmnElement="Gateway_00cl33q" isMarkerVisible="true">
+        <dc:Bounds x="1465" y="445" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1465" y="407.5" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qfecum_di" bpmnElement="Activity_0ndih6j">
+        <dc:Bounds x="1650" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_2">
+        <dc:Bounds x="1792" y="462" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1rhbiav_di" bpmnElement="Association_1rhbiav">
-        <di:waypoint x="710" y="330" />
-        <di:waypoint x="710" y="278" />
+        <di:waypoint x="710" y="430" />
+        <di:waypoint x="710" y="387" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
