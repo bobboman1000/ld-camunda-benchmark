@@ -31,7 +31,7 @@
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://people.aifb.kit.edu/co1683/2017/list/vocab</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device1.ttl</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
@@ -91,19 +91,13 @@
     <bpmn2:sequenceFlow id="Flow_1cveuhv" sourceRef="Gateway_129plev" targetRef="Activity_10ri4u9" />
     <bpmn2:sequenceFlow id="Flow_0juz1ne" sourceRef="Gateway_0xx8ly9" targetRef="Activity_17dyh52" />
     <bpmn2:sequenceFlow id="Flow_1lqq9fa" sourceRef="Activity_17dyh52" targetRef="Gateway_129plev" />
-    <bpmn2:scriptTask id="Activity_17dyh52" name="GET 3" scriptFormat="javascript" camunda:resultVariable="response3">
-      <bpmn2:incoming>Flow_0juz1ne</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_1lqq9fa</bpmn2:outgoing>
-      <bpmn2:script>execution.setVariable("response3", java.util.Arrays.asList([java.util.Arrays.asList(["s","p","o"]),"b"]));
-java.lang.System.out.println(execution.getVariable("response3").getClass());</bpmn2:script>
-    </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="Flow_1e3u5gf" sourceRef="Activity_10ri4u9" targetRef="Activity_1k588yl" />
     <bpmn2:scriptTask id="Activity_10ri4u9" name="Merge" scriptFormat="javascript">
       <bpmn2:incoming>Flow_1cveuhv</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1e3u5gf</bpmn2:outgoing>
       <bpmn2:script>var root1 = org.camunda.spin.Spin.XML('&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"/&gt;')
 
-var results = [   "rdf-ax-triples" , "entailed" ]; //,  "response1", "response3","rdf-ax-triples" , "response2", "rdfs-ax-triples" ];
+var results = ["response2"]; // "rdfs-ax-triples", "rdfs-ax-triples" , "entailed", 
 
 var allTriplesXpath = '/*[local-name()="RDF"]/*'
 
@@ -664,7 +658,7 @@ results.forEach(
   function(result) {
     var spinxml = org.camunda.spin.Spin.XML(execution.getVariable(result));
     var triplecount = spinxml.xPath('count(' + allTriplesXpath + ')').number();
-   syso.println("considering " + result + " variable content (" + triplecount + "): " + spinxml);
+   //syso.println("considering " + result + " variable content (" + triplecount + "): " + spinxml);
     if (triplecount &gt; 0)
       spinxml.xPath(allTriplesXpath).elementList().forEach(
         function (e) {
@@ -675,7 +669,7 @@ results.forEach(
   }
 );
 
-syso.println("entailed triples (" + entailed.xPath('count(/*[local-name()="RDF"]/*)').number() + "): " + entailed)
+//syso.println("entailed triples (" + entailed.xPath('count(/*[local-name()="RDF"]/*)').number() + "): " + entailed)
 
 execution.setVariable("entailed", entailed);</bpmn2:script>
     </bpmn2:scriptTask>
@@ -763,7 +757,7 @@ results.forEach(
   }
 );
 
-java.lang.System.out.println("new tripless " + root1)
+//java.lang.System.out.println("new tripless " + root1)
 
 execution.setVariable("triples", root1)</bpmn2:script>
     </bpmn2:scriptTask>
@@ -780,6 +774,10 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmn2:outgoing>Flow_0hs67fm</bpmn2:outgoing>
       <bpmn2:script>java.lang.System.out.println("Start");</bpmn2:script>
     </bpmn2:scriptTask>
+    <bpmn2:serviceTask id="Activity_17dyh52" name="GET 3" camunda:resultVariable="response3">
+      <bpmn2:incoming>Flow_0juz1ne</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1lqq9fa</bpmn2:outgoing>
+    </bpmn2:serviceTask>
     <bpmn2:textAnnotation id="TextAnnotation_0318jk7">
       <bpmn2:text>assumption: RDF/XML with regular format (rdf:Description for the triples), ground triples, no blank nodes, no literals, no datatypes, absolute URIs (is not fixed during retrieval)</bpmn2:text>
     </bpmn2:textAnnotation>
@@ -1079,9 +1077,6 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmndi:BPMNShape id="Gateway_1mx3mi5_di" bpmnElement="Gateway_129plev">
         <dc:Bounds x="660" y="445" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0tbodxn_di" bpmnElement="Activity_17dyh52">
-        <dc:Bounds x="491" y="430" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1mbvtll_di" bpmnElement="Activity_10ri4u9">
         <dc:Bounds x="750" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -1168,6 +1163,9 @@ execution.setVariable("triples", root1)</bpmn2:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
         <dc:Bounds x="760" y="210" width="100" height="183" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0swyqev_di" bpmnElement="Activity_17dyh52">
+        <dc:Bounds x="491" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1rhbiav_di" bpmnElement="Association_1rhbiav">
         <di:waypoint x="796" y="430" />
