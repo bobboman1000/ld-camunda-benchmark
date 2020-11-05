@@ -25,7 +25,7 @@
           <cmmn:standardEvent>occur</cmmn:standardEvent>
         </cmmn:planItemOnPart>
         <cmmn:ifPart id="IfPart_1n5uzi3">
-          <cmmn:condition id="Expression_1sy3zy5">${timeLoggingService.log(execution.getVariable("rdfs10res"))}</cmmn:condition>
+          <cmmn:condition id="Expression_1sy3zy5">${timeLoggingService.log(triples.xPath('count(/*[local-name()="RDF"]/*)').number()&gt;0)}</cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
       <cmmn:sentry id="Sentry_1vzcnt8">
