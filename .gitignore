@@ -2,3 +2,7 @@
 .AppleDouble
 .LSOverride
 
+.idea/
+camunda/camunda-h2-database*
+*.iml
+target
