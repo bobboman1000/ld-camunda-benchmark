@@ -27,18 +27,18 @@
 //java.lang.System.out.println("Nonsense");
 //java.lang.System.out.println(execution.getVariable("Input_3mohvqp"));</bpmn2:script>
     </bpmn2:scriptTask>
-    <bpmn2:serviceTask id="Activity_0wkwnu2" name="GET 2">
+    <bpmn2:serviceTask id="Activity_0wkwnu2" name="GET 3">
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device1.ttl</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device3.ttl</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
                 <camunda:entry key="Accept">application/rdf+xml</camunda:entry>
               </camunda:map>
             </camunda:inputParameter>
-            <camunda:outputParameter name="response2">${XML(response)}</camunda:outputParameter>
+            <camunda:outputParameter name="response3">${XML(response)}</camunda:outputParameter>
           </camunda:inputOutput>
           <camunda:connectorId>http-connector</camunda:connectorId>
         </camunda:connector>
@@ -50,7 +50,7 @@
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://www.w3.org/2000/01/rdf-schema</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device1.ttl</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
@@ -774,7 +774,22 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmn2:outgoing>Flow_0hs67fm</bpmn2:outgoing>
       <bpmn2:script>java.lang.System.out.println("Start");</bpmn2:script>
     </bpmn2:scriptTask>
-    <bpmn2:serviceTask id="Activity_17dyh52" name="GET 3" camunda:resultVariable="response3">
+    <bpmn2:serviceTask id="Activity_17dyh52" name="GET 2" camunda:resultVariable="response3">
+      <bpmn2:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device2.ttl</camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/rdf+xml</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="response2">${XML(response)}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>Flow_0juz1ne</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1lqq9fa</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -1161,11 +1176,11 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmndi:BPMNShape id="Activity_1kwd2gz_di" bpmnElement="Activity_1j5r42f">
         <dc:Bounds x="220" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
-        <dc:Bounds x="760" y="210" width="100" height="183" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0swyqev_di" bpmnElement="Activity_17dyh52">
         <dc:Bounds x="491" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
+        <dc:Bounds x="760" y="210" width="100" height="183" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1rhbiav_di" bpmnElement="Association_1rhbiav">
         <di:waypoint x="796" y="430" />
