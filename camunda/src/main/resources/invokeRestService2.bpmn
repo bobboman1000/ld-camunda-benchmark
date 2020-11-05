@@ -677,8 +677,7 @@ results.forEach(
 
 syso.println("entailed triples (" + entailed.xPath('count(/*[local-name()="RDF"]/*)').number() + "): " + entailed)
 
-execution.setVariable("entailed", entailed);
-</bpmn2:script>
+execution.setVariable("entailed", entailed);</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="Flow_01dnvg7" sourceRef="Activity_1k0le0g" targetRef="Gateway_00cl33q" />
     <bpmn2:task id="Activity_042ylbg" name="rdfD1">
@@ -693,8 +692,7 @@ execution.setVariable("entailed", entailed);
       <bpmn2:incoming>Flow_0t7z0ri</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1910bim</bpmn2:outgoing>
       <bpmn2:script>var ret = org.camunda.spin.Spin.XML('&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;&lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;  &lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#domain"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#range"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#member"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#label"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;    &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#domain"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#range"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#member"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#label"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;    &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty"&gt;&lt;rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;&lt;/rdf:Description&gt;&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;    &lt;rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/&gt;&lt;/rdf:Description&gt;  &lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Datatype"&gt;    &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;&lt;/rdf:Description&gt;&lt;/rdf:RDF&gt;')
-execution.setVariable("rdfs-ax-triples", ret)
-</bpmn2:script>
+execution.setVariable("rdfs-ax-triples", ret)</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="Flow_0t7z0ri" sourceRef="Gateway_0xx8ly9" targetRef="Activity_117go3h" />
     <bpmn2:sequenceFlow id="Flow_1910bim" sourceRef="Activity_117go3h" targetRef="Gateway_129plev" />
@@ -789,9 +787,6 @@ execution.setVariable("triples", root1)</bpmn2:script>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="linkeddata">
-      <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
-        <dc:Bounds x="760" y="210" width="100" height="183" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0hs67fm_di" bpmnElement="Flow_0hs67fm">
         <di:waypoint x="320" y="470" />
         <di:waypoint x="360" y="470" />
@@ -1090,11 +1085,20 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmndi:BPMNShape id="Activity_1mbvtll_di" bpmnElement="Activity_10ri4u9">
         <dc:Bounds x="750" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1e3gqh0_di" bpmnElement="Gateway_02x5171">
+        <dc:Bounds x="1025" y="445" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1qqjdii_di" bpmnElement="Activity_1qqjdii">
         <dc:Bounds x="1090" y="180" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1795zpn_di" bpmnElement="Gateway_0v9pnou">
+        <dc:Bounds x="1435" y="445" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qnf3qe_di" bpmnElement="Activity_1ai1t3n">
         <dc:Bounds x="1200" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16ibb1u_di" bpmnElement="Activity_1xeb02r">
+        <dc:Bounds x="1316" y="279" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_02xu2o1_di" bpmnElement="Activity_1hvcrvl">
         <dc:Bounds x="1090" y="630" width="100" height="80" />
@@ -1105,11 +1109,23 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmndi:BPMNShape id="Activity_036p32r_di" bpmnElement="Activity_081xarg">
         <dc:Bounds x="1200" y="380" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vhohzs_di" bpmnElement="Activity_0srmv3t">
+        <dc:Bounds x="1316" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08j9ytf_di" bpmnElement="Activity_0e5f6qw">
         <dc:Bounds x="1090" y="480" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h6ngb8_di" bpmnElement="Activity_10osdr0">
+        <dc:Bounds x="1200" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0e84xu8_di" bpmnElement="Activity_1ey3ile">
+        <dc:Bounds x="1316" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j6hd0a_di" bpmnElement="Activity_0ffd5oa">
         <dc:Bounds x="1200" y="680" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pf7sct_di" bpmnElement="Activity_1oep7g5">
+        <dc:Bounds x="1316" y="730" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1kkd3vk_di" bpmnElement="Activity_10o7gh7">
         <dc:Bounds x="1090" y="780" width="100" height="80" />
@@ -1141,35 +1157,17 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmndi:BPMNShape id="Activity_0nvuq2x_di" bpmnElement="Activity_0nvuq2x">
         <dc:Bounds x="491" y="840" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1kwd2gz_di" bpmnElement="Activity_1j5r42f">
-        <dc:Bounds x="220" y="430" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1795zpn_di" bpmnElement="Gateway_0v9pnou">
-        <dc:Bounds x="1435" y="445" width="50" height="50" />
+      <bpmndi:BPMNShape id="Activity_0t58he8_di" bpmnElement="Activity_0t58he8">
+        <dc:Bounds x="890" y="560" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1k588yl_di" bpmnElement="Activity_1k588yl">
         <dc:Bounds x="890" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0t58he8_di" bpmnElement="Activity_0t58he8">
-        <dc:Bounds x="890" y="560" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1kwd2gz_di" bpmnElement="Activity_1j5r42f">
+        <dc:Bounds x="220" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1e3gqh0_di" bpmnElement="Gateway_02x5171">
-        <dc:Bounds x="1025" y="445" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1h6ngb8_di" bpmnElement="Activity_10osdr0">
-        <dc:Bounds x="1200" y="530" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1pf7sct_di" bpmnElement="Activity_1oep7g5">
-        <dc:Bounds x="1316" y="730" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0e84xu8_di" bpmnElement="Activity_1ey3ile">
-        <dc:Bounds x="1316" y="580" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vhohzs_di" bpmnElement="Activity_0srmv3t">
-        <dc:Bounds x="1316" y="430" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_16ibb1u_di" bpmnElement="Activity_1xeb02r">
-        <dc:Bounds x="1316" y="279" width="100" height="80" />
+      <bpmndi:BPMNShape id="TextAnnotation_0318jk7_di" bpmnElement="TextAnnotation_0318jk7">
+        <dc:Bounds x="760" y="210" width="100" height="183" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1rhbiav_di" bpmnElement="Association_1rhbiav">
         <di:waypoint x="796" y="430" />
