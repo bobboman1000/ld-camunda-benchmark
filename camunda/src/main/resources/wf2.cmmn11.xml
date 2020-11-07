@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" id="Definitions_19li9jj" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
-  <cmmn:case id="Case_3x2mean">
+<cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Definitions_19li9jj" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <cmmn:case id="Case_1x2mean">
     <cmmn:casePlanModel id="CasePlanModel_13hxhp4" name="camunda">
       <cmmn:extensionElements />
       <cmmn:planItem id="PlanItem_0j8rr05" definitionRef="Stage_0medh93">
@@ -112,7 +112,7 @@
             <cmmn:standardEvent>occur</cmmn:standardEvent>
           </cmmn:planItemOnPart>
           <cmmn:ifPart id="IfPart_1ohsi5p">
-            <cmmn:condition id="Expression_04a34f3">#{timeLoggingService.log("g4 triggered")}</cmmn:condition>
+            <cmmn:condition id="Expression_04a34f3">${timeLoggingService.log("g4 triggered")}</cmmn:condition>
           </cmmn:ifPart>
         </cmmn:sentry>
         <cmmn:sentry id="Sentry_01w72ma">
@@ -120,7 +120,7 @@
             <cmmn:standardEvent>occur</cmmn:standardEvent>
           </cmmn:planItemOnPart>
           <cmmn:ifPart id="IfPart_1aq7z8c">
-            <cmmn:condition id="Expression_0ebcnkm">#{timeLoggingService.log("g9 triggered")}</cmmn:condition>
+            <cmmn:condition id="Expression_0ebcnkm">#{timeLoggingService.log("g9 triggered") &amp;&amp; triples.xPath('count(/rdf:RDF/rdf:Description[@rdf:about="http://example.org/devices#device2"]/rdf:type[@rdf:resource="http://www.w3.org/ns/ssn/System"])').ns("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#").number() &gt; 0}</cmmn:condition>
           </cmmn:ifPart>
         </cmmn:sentry>
         <cmmn:sentry id="Sentry_0m7ly71">
@@ -128,7 +128,7 @@
             <cmmn:standardEvent>occur</cmmn:standardEvent>
           </cmmn:planItemOnPart>
           <cmmn:ifPart id="IfPart_0ba4vqy">
-            <cmmn:condition id="Expression_1u91m99">#{timeLoggingService.log("g5 triggered")}</cmmn:condition>
+            <cmmn:condition id="Expression_1u91m99">${timeLoggingService.log("g5 triggered")}</cmmn:condition>
           </cmmn:ifPart>
         </cmmn:sentry>
         <cmmn:sentry id="Sentry_0wtowg3">
@@ -157,7 +157,7 @@
               <cmmn:standardEvent>occur</cmmn:standardEvent>
             </cmmn:planItemOnPart>
             <cmmn:ifPart id="IfPart_0mak0i8">
-              <cmmn:condition id="Expression_19rx448">#{timeLoggingService.log("g6 triggered")}</cmmn:condition>
+              <cmmn:condition id="Expression_19rx448">${timeLoggingService.log("g6 triggered") &amp;&amp; timeLoggingService.log(triples.xPath('count(/rdf:RDF/rdf:Description[@rdf:about="http://example.org/devices#device1"]/rdf:type[@rdf:resource="http://www.w3.org/ns/ssn/System"])').ns("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#").number() &gt; 0)}</cmmn:condition>
             </cmmn:ifPart>
           </cmmn:sentry>
           <cmmn:sentry id="Sentry_0jx670z">
@@ -165,7 +165,7 @@
               <cmmn:standardEvent>occur</cmmn:standardEvent>
             </cmmn:planItemOnPart>
             <cmmn:ifPart id="IfPart_0ak73js">
-              <cmmn:condition id="Expression_1gs1pra">#{timeLoggingService.log("g7 triggered")}</cmmn:condition>
+              <cmmn:condition id="Expression_1gs1pra">#{timeLoggingService.log("g7 triggered") &amp;&amp; triples.xPath('count(/rdf:RDF/rdf:Description[@rdf:about="http://example.org/devices#device3"]/rdf:type[@rdf:resource="http://www.w3.org/ns/ssn/System"])').ns("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#").number() &gt; 0}</cmmn:condition>
             </cmmn:ifPart>
           </cmmn:sentry>
           <cmmn:sentry id="Sentry_0b2anzv">
@@ -186,20 +186,44 @@
           </cmmn:sentry>
           <cmmn:milestone id="Milestone_1236zig" name="m6" />
           <cmmn:milestone id="Milestone_0akrwo0" name="m7" />
-          <cmmn:processTask id="ProcessTask_1kdaree" name="S8" processRef="linkeddata" />
-          <cmmn:processTask id="ProcessTask_1rbiddc" name="S7" processRef="linkeddata" />
+          <cmmn:processTask id="ProcessTask_1kdaree" name="S8" processRef="linkeddata">
+            <cmmn:extensionElements>
+              <camunda:out variables="all" />
+            </cmmn:extensionElements>
+          </cmmn:processTask>
+          <cmmn:processTask id="ProcessTask_1rbiddc" name="S7" processRef="linkeddata">
+            <cmmn:extensionElements>
+              <camunda:out variables="all" />
+            </cmmn:extensionElements>
+          </cmmn:processTask>
         </cmmn:stage>
         <cmmn:milestone id="Milestone_1184xfa" name="m3" />
         <cmmn:milestone id="Milestone_1jvt10e" name="m4" />
         <cmmn:milestone id="Milestone_1n12ns9" name="m5" />
-        <cmmn:processTask id="ProcessTask_05b41o1" name="S4" processRef="linkeddata" />
-        <cmmn:processTask id="ProcessTask_0t4dbwk" name="S5" processRef="linkeddata" />
+        <cmmn:processTask id="ProcessTask_05b41o1" name="S4" processRef="linkeddata">
+          <cmmn:extensionElements>
+            <camunda:out variables="all" />
+          </cmmn:extensionElements>
+        </cmmn:processTask>
+        <cmmn:processTask id="ProcessTask_0t4dbwk" name="S5" processRef="linkeddata">
+          <cmmn:extensionElements>
+            <camunda:out variables="all" />
+          </cmmn:extensionElements>
+        </cmmn:processTask>
       </cmmn:stage>
       <cmmn:milestone id="Milestone_0y5lw8l" name="m1" />
       <cmmn:milestone id="Milestone_0isezxc" name="m2" />
       <cmmn:milestone id="Milestone_10exyt5" name="m8" />
-      <cmmn:processTask id="ProcessTask_0zm9riv" name="S1" processRef="linkeddata" />
-      <cmmn:processTask id="ProcessTask_0skgr0i" name="S2" processRef="linkeddata" />
+      <cmmn:processTask id="ProcessTask_0zm9riv" name="S1" processRef="linkeddata">
+        <cmmn:extensionElements>
+          <camunda:out variables="all" />
+        </cmmn:extensionElements>
+      </cmmn:processTask>
+      <cmmn:processTask id="ProcessTask_0skgr0i" name="S2" processRef="linkeddata">
+        <cmmn:extensionElements>
+          <camunda:out variables="all" />
+        </cmmn:extensionElements>
+      </cmmn:processTask>
     </cmmn:casePlanModel>
   </cmmn:case>
   <cmmndi:CMMNDI>

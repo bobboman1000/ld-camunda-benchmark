@@ -97,7 +97,7 @@
       <bpmn2:outgoing>Flow_1e3u5gf</bpmn2:outgoing>
       <bpmn2:script>var root1 = org.camunda.spin.Spin.XML('&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"/&gt;')
 
-var results = ["response2"]; // "rdfs-ax-triples", "rdfs-ax-triples" , "entailed", 
+var results = ["response1", "response2", "response3"]; // "rdfs-ax-triples", "rdfs-ax-triples" , "entailed", 
 
 var allTriplesXpath = '/*[local-name()="RDF"]/*'
 

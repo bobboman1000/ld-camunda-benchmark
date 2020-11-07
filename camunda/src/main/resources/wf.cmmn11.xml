@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cmmn:definitions xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" id="Definitions_19li9jj" targetNamespace="http://bpmn.io/schema/cmmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
-  <cmmn:case id="Case_1x2mean">
+  <cmmn:case id="Case_3x2mean">
     <cmmn:casePlanModel id="CasePlanModel_13hxhp4" name="camunda">
       <cmmn:extensionElements />
       <cmmn:planItem id="PlanItem_000ijxu" definitionRef="Milestone_0juczjk">

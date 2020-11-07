@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 public class Application {
 
+
   @Autowired
   TimeLoggingService timeLoggingService;
 
