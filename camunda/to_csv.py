@@ -1,7 +1,7 @@
 import sys 
 import re
 
-file_list = sys.argv[1].split(',')
+file_list = sys.argv[1:]
 
 start = ""
 end = ""

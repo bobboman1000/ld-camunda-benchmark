@@ -157,7 +157,7 @@
               <cmmn:standardEvent>occur</cmmn:standardEvent>
             </cmmn:planItemOnPart>
             <cmmn:ifPart id="IfPart_0mak0i8">
-              <cmmn:condition id="Expression_19rx448">${timeLoggingService.log("g6 triggered") &amp;&amp; timeLoggingService.log(triples.xPath('count(/rdf:RDF/rdf:Description[@rdf:about="http://example.org/devices#device1"]/rdf:type[@rdf:resource="http://www.w3.org/ns/ssn/System"])').ns("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#").number() &gt; 0)}</cmmn:condition>
+              <cmmn:condition id="Expression_19rx448">${timeLoggingService.log("g6 triggered") &amp;&amp; triples.xPath('count(/rdf:RDF/rdf:Description[@rdf:about="http://example.org/devices#device1"]/rdf:type[@rdf:resource="http://www.w3.org/ns/ssn/System"])').ns("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#").number() &gt; 0}</cmmn:condition>
             </cmmn:ifPart>
           </cmmn:sentry>
           <cmmn:sentry id="Sentry_0jx670z">

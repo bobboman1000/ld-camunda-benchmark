@@ -31,7 +31,7 @@
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device3.ttl</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/ldbbc/device3.ttl</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
@@ -50,7 +50,7 @@
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device1.ttl</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/ldbbc/device1.ttl</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
@@ -778,7 +778,7 @@ execution.setVariable("triples", root1)</bpmn2:script>
       <bpmn2:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>
-            <camunda:inputParameter name="url">http://localhost:9090/ldbbc/device2.ttl</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/ldbbc/device2.ttl</camunda:inputParameter>
             <camunda:inputParameter name="method">GET</camunda:inputParameter>
             <camunda:inputParameter name="headers">
               <camunda:map>
